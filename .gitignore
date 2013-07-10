@@ -8,3 +8,5 @@
 .omakedb*
 *.ps
 *.pdf
+*.cls
+*.clo
