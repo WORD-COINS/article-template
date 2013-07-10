@@ -1,0 +1,3 @@
+[submodule "texfiles"]
+	path = texfiles
+	url = https://github.com/yoshimuraYuu/word-cls.git
