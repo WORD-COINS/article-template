@@ -6,7 +6,7 @@
 # 使い方
 
 1. `git clone https://github.com/WORD-COINS/article-template.git`
-2. `cd ./word-hinagata`
+2. `cd ./article-template`
 3. `submodule init`
 4. `submodule update`
 5. `cd ./articles`
