@@ -5,7 +5,7 @@
 
 # 使い方
 
-1. `git clone https://github.com/yoshimuraYuu/word-hinagata.git`
+1. `git clone https://github.com/WORD-COINS/article-template.git`
 2. `cd ./word-hinagata`
 3. `submodule init`
 4. `submodule update`
