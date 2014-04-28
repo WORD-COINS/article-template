@@ -1,7 +1,0 @@
-
-open build/LaTeX
-
-DefineCommandVars()
-
-.SUBDIRS: .
-

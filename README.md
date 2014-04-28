@@ -20,10 +20,12 @@
 # 「文　編集部」の消し方
 
 WORD編集部の人間ではない場合、著者の前に付く「文　編集部」を削除したくなると思います。
-そういう場合は`\subtitle`の後（少なくとも`\begin{document}`の前）などに`\authormark`を使って次のようにしてください。
+そういう場合は`\subtitle`の後（少なくとも`\begin{document}`の前）などに次のようなコマンドを追加してください。
 
 ```tex
-\authormark{}
+\makeatletter
+\newcommand{\@authormark}{}
+\makeatother
 ```
 
 このようにすると、「文　編集部」が消滅します。

@@ -8,6 +8,7 @@
 .omakedb*
 *.ps
 *.pdf
-*.cls
-*.clo
-default-style.sty
+*.synctex.gz
+*.fdb_latexmk
+articles/*/word.cls
+articles/*/word.clo

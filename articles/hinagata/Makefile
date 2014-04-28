@@ -1,22 +1,36 @@
-LATEX   = platex --interaction=nonstopmode --kanji=utf8
-DVIPDFM = dvipdfmx -p jisb5
+MAKE     = make
+LATEXMK  = latexmk
+CP       = cp
+RM       = rm
 
-all : main.pdf
+SRC      = main
 
-word.cls : ../../texfiles/word.cls
-	cp $< $@
+TARGET   = $(addsuffix .pdf, $(SRC))
+CLASS    = word
 
-word.clo : ../../texfiles/word.clo
-	cp $< $@
+TEXDEPS  = $(addsuffix .cls, $(CLASS)) $(addsuffix .clo, $(CLASS))
+TEXFILES = ../../texfiles
 
-default-style.sty : ../../texfiles/default-style.sty
-	cp $< $@
+TEXDTX   = $(addsuffix .dtx, $(TEXFILES)/$(CLASS))
+TEXINS   = $(addsuffix .ins, $(TEXFILES)/$(CLASS))
 
-main.dvi : main.tex word.cls word.clo default-style.sty
-	$(LATEX) $<
+.PHONY: all build continue clean
 
-main.pdf : main.dvi
-	$(DVIPDFM) $<
+all:
+	$(MAKE) build
 
-clean :
-	rm -f word.cls word.clo default-style.sty *.dvi *.pdf *.log *.aux
+build:
+	$(MAKE) $(TEXDEPS)
+	$(LATEXMK) $(SRC)
+
+continue:
+	$(LATEXMK) -pvc $(SRC)
+
+$(TEXDEPS): $(TEXDTX) $(TEXINS)
+	$(RM) -rf $(TEXDEPS)
+	$(MAKE) -C $(TEXFILES)
+	$(CP) -r $(foreach ext, .clo .cls, $(TEXFILES)/$(CLASS)$(ext)) ./
+
+clean:
+	$(RM) -rf $(TEXDEPS)
+	$(LATEXMK) -C
