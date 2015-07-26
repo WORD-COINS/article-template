@@ -1,18 +1,19 @@
-MAKE     = make
-LATEXMK  = latexmk
-CP       = cp
-RM       = rm
+MAKE         = make
+LATEXMK      = latexmk
+LATEXMKFLAG ?=
+CP           = cp
+RM           = rm
 
-SRC      = main
+SRC          = main
 
-TARGET   = $(addsuffix .pdf, $(SRC))
-CLASS   ?= word
+TARGET       = $(addsuffix .pdf, $(SRC))
+CLASS       ?= word
 
-TEXDEPS  = $(addsuffix .clo, $(CLASS)) $(addsuffix .cls, $(CLASS))
-TEXFILES = ../../texfiles
+TEXDEPS      = $(addsuffix .clo, $(CLASS)) $(addsuffix .cls, $(CLASS))
+TEXFILES     = ../../texfiles
 
-TEXDTX   = $(addsuffix .dtx, $(TEXFILES)/$(CLASS))
-TEXINS   = $(addsuffix .ins, $(TEXFILES)/$(CLASS))
+TEXDTX       = $(addsuffix .dtx, $(TEXFILES)/$(CLASS))
+TEXINS       = $(addsuffix .ins, $(TEXFILES)/$(CLASS))
 
 .PHONY: all build continue clean lua cls
 
@@ -20,12 +21,11 @@ all:
 	$(MAKE) build
 
 lua:
-	CLASS=word-lua $(MAKE) cls
-	$(LATEXMK) -pdflatex=lualatex -pdf $(SRC)
+	CLASS=word-lua LATEXMKFLAG='-pdflatex=lualatex -pdf' $(MAKE)
 
 build:
 	$(MAKE) cls
-	$(LATEXMK) $(SRC)
+	$(LATEXMK) $(LATEXMKFLAG) $(SRC)
 
 continue:
 	$(LATEXMK) -pvc $(SRC)
