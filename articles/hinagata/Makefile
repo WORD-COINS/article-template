@@ -1,6 +1,7 @@
 MAKE         = make
 LATEXMK      = latexmk
 LATEXMKFLAG ?=
+LATEXMKFLAG += -halt-on-error
 CP           = cp
 RM           = rm
 
@@ -32,10 +33,10 @@ lua:
 	CLASS=word-lua $(MAKE)
 
 continue:
-	LATEXMKFLAG=-pvc $(MAKE)
+	LATEXMKFLAG+=-pvc $(MAKE)
 
 continue-lua:
-	LATEXMKFLAG=-pvc CLASS=word-lua $(MAKE)
+	CLASS=word-lua $(MAKE) continue
 
 cls: $(TEXDTX) $(TEXINS)
 	$(RM) -rf $(TEXDEPS)
@@ -45,3 +46,4 @@ cls: $(TEXDTX) $(TEXINS)
 clean:
 	$(RM) -f $(TEXDEPS) word-lua.cl*
 	$(LATEXMK) -C
+
