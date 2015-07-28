@@ -6,12 +6,11 @@ WORDの記事の雛形
 # 使い方
 1. `git clone https://github.com/WORD-COINS/article-template.git`
 2. `cd ./article-template`
-3. `submodule init`
-4. `submodule update`
-5. `cd ./articles`
-6. `cp -r ./hinagata ./my-article-name`
-7. `cd ./my-article-name`
-8. `make`
+3. `git submodule update --init`
+4. `cd ./articles`
+5. `cp -r ./hinagata ./my-article-name`
+6. `cd ./my-article-name`
+7. `make`
 
 これで`main.pdf`が生成されれば成功です。
 あとは`main.tex`を編集すれば記事が出来ます。
@@ -36,7 +35,7 @@ WORD編集部の人間ではない場合、著者の前に付く「文　編集�
 
 # word-lua
 WORDでは新たにLuaLaTeXが使えるようになりました。
-使い方は、上記の使い方8.の前に`make init-lua`としてください。以降は`make`のみでOKです。
+使い方は、上記の**使い方7.の前に**`make init-lua`としてください。以降は`make`のみでOKです。
 
 ## 「文　編集部」の消し方
 LuaLaTeXでは「文　編集部」は以下のコマンドでも消すことができます。
@@ -54,4 +53,4 @@ LuaLaTeXでは「文　編集部」は以下のコマンドでも消すことが
 ```
 
 # 質問
-[@_yyu_](https://twitter.com/_yyu_)へ投げると早い。word-luaに関しては[@Nymphium](https://twitter.com/Nymphium)か[@azuma962](https://twitter.com/azuma962)へ。
+[@\_yyu\_](https://twitter.com/_yyu_)へ投げると早い。word-luaに関しては[@Nymphium](https://twitter.com/Nymphium)か[@azuma962](https://twitter.com/azuma962)へ。
