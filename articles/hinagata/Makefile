@@ -1,18 +1,17 @@
 MAKE         = make
 LATEXMK      = latexmk
 LATEXMKFLAG ?=
-LATEXMKFLAG += -halt-on-error
+LATEXMKFLAG += -halt-on-error -pdflatex=lualatex -pdf
 CP           = cp
 RM           = rm
+
+SED          = sed
+MAKEFILE     = Makefile
 
 SRC          = main
 
 TARGET       = $(addsuffix .pdf, $(SRC))
-CLASS       ?= word
-
-ifeq ($(CLASS),word-lua)
-	LATEXMKFLAG += -pdflatex=lualatex -pdf
-endif
+CLASS        = word-lua
 
 TEXDEPS      = $(addsuffix .clo, $(CLASS)) $(addsuffix .cls, $(CLASS))
 TEXFILES     = ../../texfiles
@@ -20,7 +19,7 @@ TEXFILES     = ../../texfiles
 TEXDTX       = $(addsuffix .dtx, $(TEXFILES)/$(CLASS))
 TEXINS       = $(addsuffix .ins, $(TEXFILES)/$(CLASS))
 
-.PHONY: all build lua continue continue-lua cls clean
+.PHONY: all build continue cls clean
 
 all:
 	$(MAKE) build
@@ -29,21 +28,15 @@ build:
 	$(MAKE) cls
 	$(LATEXMK) $(LATEXMKFLAG) $(SRC)
 
-lua:
-	CLASS=word-lua $(MAKE)
-
 continue:
 	LATEXMKFLAG+=-pvc $(MAKE)
-
-continue-lua:
-	CLASS=word-lua $(MAKE) continue
 
 cls: $(TEXDTX) $(TEXINS)
 	$(RM) -rf $(TEXDEPS)
 	$(MAKE) $(CLASS) -C $(TEXFILES)
-	-$(CP) -r $(foreach ext, .clo .cls, $(TEXFILES)/$(CLASS)$(ext)) ./
+	$(CP) -r $(foreach ext, .cls, $(TEXFILES)/$(CLASS)$(ext)) ./
 
 clean:
-	$(RM) -f $(TEXDEPS) word-lua.cl*
+	$(RM) -f $(TEXDEPS)
 	$(LATEXMK) -C
 
