@@ -1,36 +1,49 @@
-MAKE     = make
-LATEXMK  = latexmk
-CP       = cp
-RM       = rm
+MAKE         = make
+LATEXMK      = latexmk
+LATEXMKFLAG ?=
+LATEXMKFLAG += -halt-on-error
+CP           = cp
+RM           = rm
 
-SRC      = main
+SED          = sed
+MAKEFILE     = Makefile
 
-TARGET   = $(addsuffix .pdf, $(SRC))
-CLASS    = word
+SRC          = main
 
-TEXDEPS  = $(addsuffix .cls, $(CLASS)) $(addsuffix .clo, $(CLASS))
-TEXFILES = ../../texfiles
+TARGET       = $(addsuffix .pdf, $(SRC))
+CLASS        = word
 
-TEXDTX   = $(addsuffix .dtx, $(TEXFILES)/$(CLASS))
-TEXINS   = $(addsuffix .ins, $(TEXFILES)/$(CLASS))
+TEXDEPS      = $(addsuffix .clo, $(CLASS)) $(addsuffix .cls, $(CLASS))
+TEXFILES     = ../../texfiles
 
-.PHONY: all build continue clean
+TEXDTX       = $(addsuffix .dtx, $(TEXFILES)/$(CLASS))
+TEXINS       = $(addsuffix .ins, $(TEXFILES)/$(CLASS))
+
+.PHONY: all build init-lua continue cls clean
 
 all:
 	$(MAKE) build
 
 build:
-	$(MAKE) $(TEXDEPS)
-	$(LATEXMK) $(SRC)
+	$(MAKE) cls
+	$(LATEXMK) $(LATEXMKFLAG) $(SRC)
+
+init-lua:
+	$(SED) -i '4s/$$/ -pdflatex=lualatex -pdf/' $(MAKEFILE) || $(SED) -i '' '4s/$$/ -pdflatex=lualatex -pdf/' $(MAKEFILE)
+	$(SED) -i "14s/$$/-lua/" $(MAKEFILE)                    || $(SED) -i '' "14s/$$/-lua/" $(MAKEFILE)
+	$(SED) -i "22s/init-lua //" $(MAKEFILE)                 || $(SED) -i '' "22s/init-lua //" $(MAKEFILE)
+	$(SED) -i "44s/.clo //" $(MAKEFILE)                     || $(SED) -i '' "44s/.clo //" $(MAKEFILE)
+	$(SED) -i "31,37d" $(MAKEFILE)                          || $(SED) -i '' "31,37d" $(MAKEFILE)
 
 continue:
-	$(LATEXMK) -pvc $(SRC)
+	LATEXMKFLAG+=-pvc $(MAKE)
 
-$(TEXDEPS): $(TEXDTX) $(TEXINS)
+cls: $(TEXDTX) $(TEXINS)
 	$(RM) -rf $(TEXDEPS)
-	$(MAKE) -C $(TEXFILES)
+	$(MAKE) $(CLASS) -C $(TEXFILES)
 	$(CP) -r $(foreach ext, .clo .cls, $(TEXFILES)/$(CLASS)$(ext)) ./
 
 clean:
-	$(RM) -rf $(TEXDEPS)
+	$(RM) -f $(TEXDEPS)
 	$(LATEXMK) -C
+

@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+$pdflatex = 'lualatex %O -synctex=1 -interaction=nonstopmode -shell-escape %B';
 $latex= 'platex %O -synctex=1 -interaction=nonstopmode -kanji=utf8 -shell-escape %B';
 $bibtex = 'pbibtex %O -kanji=utf8 %B';
 $dvipdf= 'dvipdfmx %O -p jisb5 -d 5 -o %D %S';
