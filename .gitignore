@@ -13,7 +13,4 @@
 articles/*/word.cls
 articles/*/word-lua.cls
 articles/*/word.clo
-texfiles/*.log
-texfiles/*.clo
-texfiles/*.cls
 
