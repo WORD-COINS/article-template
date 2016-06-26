@@ -1,0 +1,15 @@
+os:
+  - osx
+cache:
+  directories:
+    - "$HOME/Library/texlive/2016basic/texmf-var/luatex-cache"
+install:
+  - curl -L -O http://mirrors.concertpass.com/tex-archive/systems/mac/mactex/BasicTeX.pkg
+  - sudo installer -pkg BasicTeX.pkg -target /
+  - rm BasicTeX.pkg
+  - export PATH=$PATH:/usr/texbin
+  - sudo tlmgr update --self --all
+  - sudo tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended filehook type1cm mdframed needspace unicode-math
+script:
+  - cd articles/hinagata
+  - make
