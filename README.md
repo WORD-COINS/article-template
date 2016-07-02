@@ -57,3 +57,7 @@ LuaLaTeXでは「文　編集部」は以下のコマンドでも消すことが
 
 # 質問
 [@\_yyu\_](https://twitter.com/_yyu_)へ投げると早い。word-luaに関しては[@Nymphium](https://twitter.com/Nymphium)か[@azuma962](https://twitter.com/azuma962)へ。
+
+# ライセンス
+
+License: modified BSD (see LICENSE)
