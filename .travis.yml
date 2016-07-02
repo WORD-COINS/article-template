@@ -12,4 +12,8 @@ install:
   - sudo tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended filehook type1cm mdframed needspace unicode-math
 script:
   - cd articles/hinagata
+  - autoconf
+  - ./configure
+  - make
+  - ./configure --enable-luatex
   - make

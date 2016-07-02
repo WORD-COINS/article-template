@@ -1,4 +1,3 @@
-\documentclass{word}
 \usepackage{listings}
 \lstset{
   basicstyle=\ttfamily,
@@ -31,12 +30,14 @@ git checkout -b personal/$username$/$article\_name$
 cd ./articles
 cp -r ./hinagata ./my-article-name
 cd ./my-article-name
+autoconf
+./configure
 \end{lstlisting}
 
 \subsection{選択: LuaLaTeX を使う}
 
 WORD では新たに LuaLaTeX が使えるようになりました。
-使い方は、上記の作業のあと \lstinline|make init-lua| とし、 \ovalbox{main.tex} の指す cls ファイルを \ovalbox{word-lua} に変更してください。
+使い方は、\lstinline|./configure|のかわりに\lstinline|./configure --enable-luatex| としてください。
 
 \section{記事を書く}
 

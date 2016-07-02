@@ -13,7 +13,9 @@ WORDの記事の雛形
 4. `cd ./articles`
 5. `cp -r ./hinagata ./my-article-name`
 6. `cd ./my-article-name`
-7. `make`
+7. `autoconf`
+8. `./configure`
+9. `make`
 
 これで`main.pdf`が生成されれば成功です。
 あとは`main.tex`を編集すれば記事が出来ます。
@@ -38,7 +40,8 @@ WORD編集部の人間ではない場合、著者の前に付く「文　編集�
 
 # word-lua
 WORDでは新たにLuaLaTeXが使えるようになりました。
-使い方は、上記の**使い方7.の前に**`make init-lua`とし､main.texの指すclsファイルを*word-lua*に変更してください。以降は`make`のみでOKです。
+使い方は、上記の**使い方8.**で`./configure --enable-luatex`としてください。
+以降は`make`のみでOKです。
 
 ## 「文　編集部」の消し方
 LuaLaTeXでは「文　編集部」は以下のコマンドでも消すことができます。
