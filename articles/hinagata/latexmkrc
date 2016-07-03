@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 $pdflatex = 'lualatex %O -synctex=1 -interaction=nonstopmode -shell-escape %B';
 $latex= 'platex %O -synctex=1 -interaction=nonstopmode -kanji=utf8 -shell-escape %B';
