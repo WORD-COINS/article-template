@@ -1,0 +1,41 @@
+MAKE         = make
+LATEXMK      = latexmk
+LATEXMKFLAG  = -halt-on-error
+CP           = cp
+RM           = rm
+
+SRC          = @SRC@
+
+TARGET       = $(addsuffix .pdf, $(SRC))
+
+TEXFILES     = ../../texfiles
+
+CLASS        = @CLASS@
+TEXDEPS      = $(foreach deps, @TEXDEPS@, $(TEXFILES)/$(deps))
+LATEXMKFLAG += @PDFFLAG@
+
+TEXDTX       = $(addsuffix .dtx, $(TEXFILES)/$(CLASS))
+TEXINS       = $(addsuffix .ins, $(TEXFILES)/$(CLASS))
+
+.PHONY: all continue cls clean
+
+all: $(SRC).pdf
+	$(CP) $< main.pdf
+
+%.pdf: %.tex
+	$(MAKE) cls
+	$(LATEXMK) $(LATEXMKFLAG) $<
+
+continue:
+	LATEXMKFLAG+=-pvc
+	$(MAKE)
+
+cls: $(TEXDTX) $(TEXINS)
+	$(RM) -rf $(TEXDEPS)
+	$(MAKE) $(CLASS) -C $(TEXFILES)
+	$(CP) -r $(foreach deps, $(TEXDEPS), $(deps)) ./
+
+clean:
+	$(RM) -f $(TEXDEPS)
+	$(LATEXMK) -C
+

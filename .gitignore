@@ -13,4 +13,7 @@
 articles/*/word.cls
 articles/*/word-lua.cls
 articles/*/word.clo
-
+articles/*/configure
+articles/hinagata/Makefile
+articles/*/config.status
+articles/*/autom4te.cache
