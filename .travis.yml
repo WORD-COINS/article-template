@@ -17,3 +17,6 @@ script:
   - make
   - ./configure --enable-luatex
   - make
+  - export WORD_FONT=hiragino-pron
+  - make clean
+  - make
