@@ -1,15 +1,19 @@
 os:
   - osx
+  - linux
+dist: trusty
+sudo: required
 cache:
   directories:
     - "$HOME/Library/texlive/2016basic/texmf-var/luatex-cache"
+before_install:
+  - wget https://raw.githubusercontent.com/y-yu/install-tex-travis/master/install-tex.sh
+  - wget https://raw.githubusercontent.com/y-yu/install-tex-travis/master/tlmgr.sh
+  - chmod +x install-tex.sh tlmgr.sh
 install:
-  - curl -L -O http://mirrors.concertpass.com/tex-archive/systems/mac/mactex/BasicTeX.pkg
-  - sudo installer -pkg BasicTeX.pkg -target /
-  - rm BasicTeX.pkg
-  - export PATH=$PATH:/usr/texbin
-  - sudo tlmgr update --self --all
-  - sudo tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended filehook type1cm mdframed needspace unicode-math
+  - . ./install-tex.sh
+  - ./tlmgr.sh update --self --all
+  - ./tlmgr.sh install latexmk collection-luatex collection-langjapanese collection-fontsrecommended filehook type1cm mdframed needspace unicode-math
 script:
   - cd articles/hinagata
   - autoconf
@@ -17,6 +21,8 @@ script:
   - make
   - ./configure --enable-luatex
   - make
-  - export WORD_FONT=hiragino-pron
-  - make clean
-  - make
+  - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
+      export WORD_FONT=hiragino-pron;
+      make clean;
+      make;
+    fi
