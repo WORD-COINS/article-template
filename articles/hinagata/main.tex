@@ -20,7 +20,7 @@
 
 \section{まずはじめに}
 
-\subsection{デフォルトオプション: platex を使う}
+\subsection{デフォルトオプション: p\LaTeX を使う}
 
 $article\_name$は適当な名前として、以下のようなコマンドでブランチを分けましょう。
 
@@ -34,41 +34,41 @@ autoconf
 ./configure
 \end{lstlisting}
 
-\subsection{選択: LuaLaTeX を使う}
+\subsection{選択: Lua\LaTeX を使う}
 
 WORD では新たに LuaLaTeX が使えるようになりました。
-使い方は、\lstinline|./configure|のかわりに\lstinline|./configure --enable-luatex| としてください。
+使い方は、\lstinline|./configure|のかわりに\lstinline|./configure --enable-luatex|としてください。
 
 \section{記事を書く}
 
-記事を書いたら、 \lstinline|make| コマンドでビルドできます。
+記事を書いたら、\lstinline|make|コマンドでビルドできます。
 
 \begin{lstlisting}
 git add *
 make
 \end{lstlisting}
 
-これで\ovalbox{main.pdf} が生成されれば成功です。
-あとは\ovalbox{main.tex} を編集すれば記事が出来ます。
+これで\ovalbox{main.pdf}が生成されれば成功です。
+あとは\ovalbox{main.tex}を編集すれば記事が出来ます。
 
-\section{Git サーバに push する}
+\section{Git サーバにpushする}
 
-記事のキリの良いところで\lstinline|git push|するといいのですが、最初の push の時には、
-origin\footnote{ここでは git サーバである dev.word-ac.net のことです}
+記事のキリの良いところで\lstinline|git push|するといいのですが、最初のpushの時には、
+origin\footnote{ここではGitサーバである\texttt{dev.word-ac.net}のことです}%
 に新しいブランチを登録する必要があります。それは以下のようにしましょう。
 
 \begin{lstlisting}[mathescape]
 git push origin personal/$username$/$article\_name$
 \end{lstlisting}
 
-push を成功させた場合には、ビルドの結果が slack\footnote{\url{https://word-ac.slack.com}} の \#jenkins チャンネルに流れます。
-slack を見ていない場合は、\url{http://dev.word-ac.net/jenkins/job/LaTeX/} および \url{http://dev.word-ac.net/gitweb/} を見ると良いでしょう。
+pushを成功させた場合には、ビルドの結果がslack\footnote{\url{https://word-ac.slack.com}}の\#jenkinsチャンネルに流れます。
+slackを見ていない場合は、\url{http://jenkins.word-ac.net/job/LaTeX/}および\url{http://dev.word-ac.net/gitweb/}を見ると良いでしょう。
 
 \section{トラブルシューティング}
 
 \subsection{偶数頁}
 
-編集作業をしていると、レイアウトの問題で偶数頁から開始していただくことがあります。その場合の対処法は、 TeX の処理系によって以下のように異なります。
+編集作業をしていると、レイアウトの問題で偶数頁から開始していただくことがあります。その場合の対処法は、\TeX の処理系によって以下のように異なります。
 
 \subsubsection{platex を使う場合}
 
@@ -80,7 +80,7 @@ slack を見ていない場合は、\url{http://dev.word-ac.net/jenkins/job/LaTe
 
 \subsubsection{LuaLaTeX を使う場合}
 
-\lstinline|\documentclass| のオプションに \ovalbox{swapheader} をつけることで簡単にできます。
+\lstinline|\documentclass|のオプションに\ovalbox{swapheader}をつけることで簡単にできます。
 
 \begin{lstlisting}[mathescape]
 \documentclass[swapheader]{word-lua}
@@ -88,15 +88,15 @@ slack を見ていない場合は、\url{http://dev.word-ac.net/jenkins/job/LaTe
 
 \section{鍵の登録}
 
-Git サーバに鍵を登録しないと、 push できません。もしそれが原因でつまっている場合には、誰か権限を持っていそうな人に頼んで登録してもらいましょう。2016年6月現在では、
-pi8027, yyu, ioriveur, shinkbr, osyoyu, chris, nymphium が部員を登録できます。鍵が変わった場合も声をかけましょう。
+Gitサーバに鍵を登録しないと、pushできません。もしそれが原因でつまっている場合には、誰か権限を持っていそうな人に頼んで登録してもらいましょう。2016年6月現在では、
+pi8027, yyu, ioriveur, shinkbr, osyoyu, chris, nymphiumが部員を登録できます。鍵が変わった場合も声をかけましょう。
 
 \section{他の問題について}
 
-問題があれば slack の \#latex チャンネルや、編集会議で聞くと良いでしょう。
+問題があればslackの\#latexチャンネルや、編集会議で聞くと良いでしょう。
 
-直接詳しい人に SNS で聞く場合、 @\_yyu\_\footnote{\url{https://twitter.com/_yyu_}}へ投げると早い。
-word-lua に関しては@Nymphium\footnote{\url{https://twitter.com/Nymphium}}か@azuma962\footnote{\url{https://twitter.com/azuma962}}へ。
+直接詳しい人にSNSで聞く場合、@\_yyu\_\footnote{\url{https://twitter.com/_yyu_}}へ投げると早い。
+word-luaに関しては@Nymphium\footnote{\url{https://twitter.com/Nymphium}}か@azuma962\footnote{\url{https://twitter.com/azuma962}}へ。
 
 
 \end{document}

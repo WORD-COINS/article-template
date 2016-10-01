@@ -22,7 +22,7 @@ TEXINS       = $(addsuffix .ins, $(TEXFILES)/$(CLASS))
 all: $(SRC).pdf
 	$(CP) $< main.pdf
 
-%.pdf: %.tex
+%.pdf: %.tex main.tex
 	$(MAKE) cls
 	$(LATEXMK) $(LATEXMKFLAG) $<
 
