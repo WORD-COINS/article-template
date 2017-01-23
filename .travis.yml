@@ -12,7 +12,7 @@ before_install:
   - chmod +x install-tex.sh tlmgr.sh
 install:
   - . ./install-tex.sh
-  - ./tlmgr.sh update --self --all
+  - ./tlmgr.sh update --self --all || echo "ignore errors"
   - ./tlmgr.sh install latexmk collection-luatex collection-langjapanese collection-fontsrecommended filehook type1cm mdframed needspace unicode-math
 script:
   - cd articles/hinagata
