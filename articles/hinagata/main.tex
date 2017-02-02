@@ -54,7 +54,7 @@ make
 \section{Git サーバにpushする}
 
 記事のキリの良いところで\lstinline|git push|するといいのですが、最初のpushの時には、
-origin\footnote{ここではGitサーバである\texttt{dev.word-ac.net}のことです}%
+origin\footnote{ここではGitサーバである\texttt{gitolite.word-ac.net}のことです}%
 に新しいブランチを登録する必要があります。それは以下のようにしましょう。
 
 \begin{lstlisting}[mathescape]
@@ -62,7 +62,7 @@ git push origin personal/$username$/$article\_name$
 \end{lstlisting}
 
 pushを成功させた場合には、ビルドの結果がslack\footnote{\url{https://word-ac.slack.com}}の\#jenkinsチャンネルに流れます。
-slackを見ていない場合は、\url{http://jenkins.word-ac.net/job/LaTeX/}および\url{http://dev.word-ac.net/gitweb/}を見ると良いでしょう。
+slackを見ていない場合は、\url{https://jenkins.word-ac.net/job/LaTeX/}および\url{https://gitiles.word-ac.net/}を見ると良いでしょう。
 
 \section{トラブルシューティング}
 
