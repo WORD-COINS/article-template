@@ -3,10 +3,11 @@ os:
   - osx
   - linux
 dist: trusty
-sudo: required
+sudo: false
 cache:
   directories:
     - "$HOME/Library/texlive/2016basic/texmf-var/luatex-cache"
+    - "$HOME/texlive/2016/texmf-var/luatex-cache"
 before_install:
   - wget https://raw.githubusercontent.com/y-yu/install-tex-travis/master/install-tex.sh
   - wget https://raw.githubusercontent.com/y-yu/install-tex-travis/master/tlmgr.sh
