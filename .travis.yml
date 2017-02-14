@@ -28,3 +28,14 @@ script:
       make clean;
       make;
     fi
+  - cmake CMakeLists.txt
+  - ./configure
+  - make
+  - ./configure --enable-luatex
+  - make
+  - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
+      export WORD_FONT=hiragino-pron;
+      make clean;
+      make;
+    fi
+
