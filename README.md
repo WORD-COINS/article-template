@@ -1,7 +1,7 @@
 WORDの記事の雛形
 ===
 [![Build Status](https://travis-ci.org/WORD-COINS/article-template.svg?branch=master)](https://travis-ci.org/WORD-COINS/article-template)
-
+[![Build status](https://ci.appveyor.com/api/projects/status/v38n9xspthe9su67?svg=true)](https://ci.appveyor.com/project/y-yu/article-template)
 
 これはGitHubで完結したWORDの記事の雛形です。
 鍵登録が出来ない場合や、WORD編集部以外のメンバーに執筆してもらう場合に利用してもらって下さい。
