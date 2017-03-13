@@ -15,7 +15,10 @@ before_install:
 install:
   - . ./install-tex.sh
   - ./tlmgr.sh update --self --all || echo "ignore errors"
-  - ./tlmgr.sh install latexmk collection-luatex collection-langjapanese collection-fontsrecommended filehook type1cm mdframed needspace unicode-math
+  - ./tlmgr.sh install latexmk collection-luatex collection-langjapanese collection-fontsrecommended type1cm mdframed needspace everyhook svn-prov
+  - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
+      sudo fmtutil-sys --all;
+    fi
 script:
   - cd articles/hinagata
   - autoconf
