@@ -14,7 +14,7 @@ install:
   - choco install cmake make
   - curl -O https://raw.githubusercontent.com/y-yu/install-tex-appveyor/master/install-tex.sh
   - bash ./install-tex.sh
-  - tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended filehook type1cm mdframed needspace unicode-math
+  - tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended type1cm mdframed needspace everyhook svn-prov
 build_script:
   - cd articles/hinagata
   - cmake -DENABLE_LUATEX=OFF .
