@@ -24,10 +24,18 @@ script:
   - autoconf
   - ./configure
   - make
+  - cp main.pdf ../../main-ptex.pdf
   - ./configure --enable-luatex
   - make
+  - cp main.pdf ../../main-luatex.pdf
   - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
       export WORD_FONT=hiragino-pron;
       make clean;
       make;
     fi
+  - cd ../../
+after_success:
+  - ./deploy.sh
+env:
+  global:
+    secure: ZgUjPMNI0GzvzrgMRjuw6cut0PEvS7+YOK+i82N6yKOPLGTVGE9cDrZpd1P699p1tNe7eotZGhwXVpWELcGYAQfp4i7POEsYbM07ToBjBHNuBn32jGF6VJ77ac5yWTzJ9ACfIKX0Rj3ocNoEoTyMBNMu2wh0dSLDitCPp0VgrB8HQfAxRPUdcyCPMO7vbAmaDY59i8sN/yNtfBOXY5ROsH0eAun8xkDclkrLST2PNM7cF/JrFC+WZBHz5X72Xu4ZdQNqZyUfiBnWscnIT/kq0D/VaWVqHIFYIi8nQ+qvLu4vsUu4bIzc4Isk8qc9iI6Pkx7TKxDayfgYuyNqjXfxrcFxdefpw+3HszF5U9m9BqrPcwGDiSNQUutKqZQiskqLK5Xa2MotjPCaNtglnGRxR4lAfUO6lcCb7NJWU8Gdwqw936KOREcKyE6zk3MYiSMTcfWJnqWt8ho4S/+G2mRbXXFxD4DCReFkqidL7N75X/QAjHWd/ezEnZVk10flFYyC/iHeGA7tyCrvI7liajBuJ8lcZiqSxouGtdFkimeykVGldFPYAiwH9Z+wJPgwZnnPqRNuM6IV9IQY0wlw+YS2vTwnvvz7F89cEwcMo9gZSSPMkXGxuAq3b0pv9BRGGEtAZJWdtER3WF03kH0kH3ISSDe6lI0TaX3RP+D72aKkoIQ=
