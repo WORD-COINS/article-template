@@ -33,6 +33,16 @@ script:
       make clean;
       make;
     fi
+  - cmake -DENABLE_LUATEX=OFF .
+  - make
+  - make clean
+  - cmake -DENABLE_LUATEX=ON .
+  - make
+  - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
+      export WORD_FONT=hiragino-pron;
+      make clean;
+      make;
+    fi
   - cd ../../
 after_success:
   - ./deploy.sh
