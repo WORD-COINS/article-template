@@ -7,6 +7,8 @@ WORDの記事の雛形
 鍵登録が出来ない場合や、WORD編集部以外のメンバーに執筆してもらう場合に利用してもらって下さい。
 
 # 使い方
+
+## macOS・Linux
 1. `git clone https://github.com/WORD-COINS/article-template.git`
 2. `cd ./article-template`
 3. `git submodule update --init`
@@ -16,6 +18,16 @@ WORDの記事の雛形
 7. `autoconf`
 8. `./configure`
 9. `make`
+
+## Windows
+1. `git clone https://github.com/WORD-COINS/article-template.git`
+2. `cd ./article-template`
+3. `git submodule update --init`
+4. `cd ./articles`
+5. `cp -r ./hinagata ./my-article-name`
+6. `cd ./my-article-name`
+7. `cmake -DENABLE_LUATEX=OFF .`
+8. `cmake --build .`
 
 これで`main.pdf`が生成されれば成功です。
 あとは`main.tex`を編集すれば記事が出来ます。
@@ -40,8 +52,13 @@ WORD編集部の人間ではない場合、著者の前に付く「文　編集�
 
 # word-lua
 WORDでは新たにLuaLaTeXが使えるようになりました。
-使い方は、上記の**使い方8.**で`./configure --enable-luatex`としてください。
+
+## macOS・Linux
+上記の**使い方8.**で`./configure --enable-luatex`としてください。
 以降は`make`のみでOKです。
+
+## Windows
+**使い方7.**で`cmake -DENABLE_LUATEX=ON .`としてください。
 
 ## 「文　編集部」の消し方
 LuaLaTeXでは「文　編集部」は以下のコマンドでも消すことができます。
