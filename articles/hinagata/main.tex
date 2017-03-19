@@ -4,9 +4,8 @@
   commentstyle=\textit,
   frame=trBL,
   numbers=left,
-  breaklines=true,                 % sets automatic line breaking
-  language=TeX,                 % the language of the code
-  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+  breaklines=true,
+  title=\lstname,
 }
 \usepackage{fancybox}
 \usepackage{url}
@@ -20,7 +19,9 @@
 
 \section{まずはじめに}
 
-\subsection{デフォルトオプション: p\LaTeX を使う}
+\subsection{p\LaTeX を使う}
+
+\subsubsection{macOS・Linux}
 
 $article\_name$は適当な名前として、以下のようなコマンドでブランチを分けましょう。
 
@@ -34,27 +35,53 @@ autoconf
 ./configure
 \end{lstlisting}
 
+\subsubsection{Windows}
+
+WORDクラスファイルはWindowsでもコンパイルすることができます。
+次のように\lstinline|cmake|を使います。
+
+\begin{lstlisting}[mathescape]
+git submodule update --init
+git checkout -b personal/$username$/$article\_name$
+cd ./articles
+cp -r ./hinagata ./my-article-name
+cd ./my-article-name
+cmake -DENABLE_LUATEX=OFF .
+\end{lstlisting}
+
 \subsection{選択: Lua\LaTeX を使う}
 
-WORD では新たに LuaLaTeX が使えるようになりました。
+WORDでは新たにLua\LaTeX が使えるようになりました。
 使い方は、\lstinline|./configure|のかわりに\lstinline|./configure --enable-luatex|としてください。
+Windowsの場合は、\lstinline|cmake -DENABLE_LUATEX=OFF .|のかわりに
+\lstinline|cmake -DENABLE_LUATEX=ON .|としてください。
 
 \section{記事を書く}
 
 記事を書いたら、\lstinline|make|コマンドでビルドできます。
+Windowsの場合は\lstinline|cmake|コマンドでビルドします。
+
+\subsection{macOS・Linux}
 
 \begin{lstlisting}
 git add *
 make
 \end{lstlisting}
 
+\subsection{Windows}
+
+\begin{lstlisting}
+git add *
+cmake --build .
+\end{lstlisting}
+
 これで\ovalbox{main.pdf}が生成されれば成功です。
 あとは\ovalbox{main.tex}を編集すれば記事が出来ます。
 
-\section{Git サーバにpushする}
+\section{Gitサーバにpushする}
 
 記事のキリの良いところで\lstinline|git push|するといいのですが、最初のpushの時には、
-origin\footnote{ここではGitサーバである\texttt{gitolite.word-ac.net}のことです}%
+origin\footnote{ここではWORDのGitサーバである\url{gitolite.word-ac.net}のことです}%
 に新しいブランチを登録する必要があります。それは以下のようにしましょう。
 
 \begin{lstlisting}[mathescape]
@@ -70,19 +97,19 @@ slackを見ていない場合は、\url{https://jenkins.word-ac.net/job/LaTeX/}�
 
 編集作業をしていると、レイアウトの問題で偶数頁から開始していただくことがあります。その場合の対処法は、\TeX の処理系によって以下のように異なります。
 
-\subsubsection{platex を使う場合}
+\subsubsection{p\LaTeX を使う場合}
 
 その場合は、プレアンブルに以下を追加してください。
 
-\begin{lstlisting}[mathescape]
+\begin{lstlisting}[language=TeX, mathescape]
 \setcounter{page}{2}
 \end{lstlisting}
 
-\subsubsection{LuaLaTeX を使う場合}
+\subsubsection{Lua\LaTeX を使う場合}
 
 \lstinline|\documentclass|のオプションに\ovalbox{swapheader}をつけることで簡単にできます。
 
-\begin{lstlisting}[mathescape]
+\begin{lstlisting}[language=TeX, mathescape]
 \documentclass[swapheader]{word-lua}
 \end{lstlisting}
 
