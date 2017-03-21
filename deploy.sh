@@ -10,8 +10,6 @@ if [[ "${TRAVIS_OS_NAME}" == "linux" && "${TRAVIS_BRANCH}" == "master" && "${TRA
   git config --global user.name "Yoshimura Yuu"
   git clone git@github.com:WORD-COINS/article-template-document.git
   cd article-template-document
-  git fetch origin gh-pages:gh-pages
-  git checkout gh-pages
   mv ../main-ptex.pdf main-ptex.pdf
   mv ../main-luatex.pdf main-luatex.pdf
   git add main-ptex.pdf main-luatex.pdf
