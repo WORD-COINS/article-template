@@ -32,6 +32,3 @@ if [ -e main.pdf ]; then
   mkdir -p "$WORKSPACE/artifacts/$repository/$branch"
   cp main.pdf "$WORKSPACE/artifacts/$repository/$branch/${push_date}_${revision:0:7}.pdf"
 fi
-
-# Back to the repository root
-cd ../..
