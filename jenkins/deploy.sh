@@ -14,8 +14,7 @@
 
 set -e
 
-# Checkout the branch
-git checkout "$branch"
+# Submodule update
 git submodule update --init --recursive
 
 # Build
@@ -26,7 +25,7 @@ WORD_FONT=hiragino-pron make
 mount_smbfs "smb://${WORD_LOGIN_USER}:${WORD_LOGIN_PASS}@${WORD_SERVER_IPADDR}/WORD-ARTICLES/" /Volumes/WORD-ARTICLES
 
 # Copy the PDF
-cp main.pdf "/Volumes/WORD-ARTICLES$dist/$article_filename"
+cp main.pdf "/Volumes/WORD-ARTICLES${dist}/$article_filename"
 
 # Unmount
 unmount /Volumes/WORD-ARTICLES
