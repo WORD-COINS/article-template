@@ -4,7 +4,7 @@
 # WORD-SEVERのIPアドレスとログインユーザー、パスワードは環境変数で与えられます。
 # また、PDFを設置する場所も環境変数で与えられます。
 #
-# $WORD_SEVER_IPADDR WORD-SERVERのIPアドレス
+# $WORD_SERVER_IPADDR WORD-SERVERのIPアドレス
 # $WORD_LOGIN_USER   WORD-SEVERのログインユーザー
 # $WORD_LOGIN_PASS   WORD-SERVERのログインパスワード
 # $article_filename  PDFの名前
@@ -18,14 +18,15 @@ set -e
 git submodule update --init --recursive
 
 # Build
-cd "articles/$artcle_directory"
+cd "articles/${article_directory}"
 WORD_FONT=hiragino-pron make
 
 # Monunt WORD-SEVER
+mkdir -p "/Volumes/WORD-ARTICLES"
 mount_smbfs "smb://${WORD_LOGIN_USER}:${WORD_LOGIN_PASS}@${WORD_SERVER_IPADDR}/WORD-ARTICLES/" /Volumes/WORD-ARTICLES
 
 # Copy the PDF
 cp main.pdf "/Volumes/WORD-ARTICLES${dist}/$article_filename"
 
 # Unmount
-unmount /Volumes/WORD-ARTICLES
+umount /Volumes/WORD-ARTICLES
