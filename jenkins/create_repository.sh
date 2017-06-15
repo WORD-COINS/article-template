@@ -5,5 +5,4 @@
 set -e
 
 git checkout master
-git remote add word "git@gitolite.word-ac.net:${REPOSITORY_NAME}"
-git push word master
+git push "ssh://git@gitolite.word-ac.net/${REPOSITORY_NAME}" master
