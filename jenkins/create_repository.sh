@@ -5,4 +5,4 @@
 set -e
 
 git checkout master
-git push "ssh://gitolite.word-ac.net/${REPOSITORY_NAME}" master
+git push "ssh://git@gitolite.word-ac.net/${REPOSITORY_NAME}" master
