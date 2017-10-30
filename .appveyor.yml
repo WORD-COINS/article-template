@@ -1,22 +1,18 @@
-image: Visual Studio 2017
+image: Visual Studio 2015
 environment:
-  PATH: '%PATH%;C:\texlive\2017\bin\win32;C:\Program Files\CMake\bin'
+  PATH: '%PATH%;C:\texlive\2017\bin\win32'
 cache:
   - 'C:\texlive\2017\texmf-var\fonts\cache'
   - 'C:\texlive\2017\texmf-var\luatex-cache'
 artifacts:
-  - path: .\articles\hinagata\main-ptex.pdf
-    name: pTeX
-  - path: .\articles\hinagata\main-lua.pdf
-    name: LuaTeX
+  - path: .\articles\hinagata\main.pdf
+    name: WORD Article
 install:
   - git submodule update --init
-  - choco install cmake
+  - choco install make
   - curl -O https://raw.githubusercontent.com/y-yu/install-tex-appveyor/master/install-tex.sh
   - bash ./install-tex.sh
-  - tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended type1cm mdframed needspace everyhook svn-prov
+  - tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended type1cm mdframed needspace newtx everyhook svn-prov
 build_script:
   - cd articles/hinagata
-  - cmake .
-  - cmake --build .
-  - copy .\main.pdf
+  - make
