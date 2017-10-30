@@ -17,21 +17,19 @@ LATEXMKFLAG +=
 TEXDTX       = $(addsuffix .dtx, $(TEXFILES)/$(CLASS))
 TEXINS       = $(addsuffix .ins, $(TEXFILES)/$(CLASS))
 
-.PHONY: all continue cls clean
+.PHONY: all continue clean
 
 all: $(SRC).pdf
-	$(CP) $< main.pdf
 
-%.pdf: %.tex main.tex
-	$(MAKE) cls
+%.pdf: %.tex $(TEXDEPS)
+	$(MAKE) $(TEXDEPS)
 	$(LATEXMK) $(LATEXMKFLAG) $<
 
 continue:
 	LATEXMKFLAG+=-pvc
 	$(MAKE)
 
-cls: $(TEXDTX) $(TEXINS)
-	$(RM) -rf $(TEXDEPS)
+$(TEXDEPS): $(TEXDTX) $(TEXINS)
 	$(MAKE) $(CLASS).cls -C $(TEXFILES)
 	$(CP) -r $(foreach deps, $(TEXDEPS), $(deps)) ./
 
