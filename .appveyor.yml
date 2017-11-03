@@ -5,8 +5,10 @@ cache:
   - 'C:\texlive\2017\texmf-var\fonts\cache'
   - 'C:\texlive\2017\texmf-var\luatex-cache'
 artifacts:
-  - path: .\articles\hinagata\main.pdf
-    name: WORD Article
+  - path: .\articles\hinagata\main-ptex.pdf
+    name: pTeX
+  - path: .\articles\hinagata\main-luatex.pdf
+    name: LuaTeX
 install:
   - git submodule update --init
   - choco install make
@@ -16,3 +18,8 @@ install:
 build_script:
   - cd articles/hinagata
   - make
+  - copy .\main.pdf .\main-ptex.pdf
+  - make clean
+  - LATEXMKFLAG=-lualatex make
+  - copy .\main.pdf .\main-luatex.pdf
+  

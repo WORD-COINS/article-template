@@ -10,8 +10,9 @@ if [[ "${TRAVIS_OS_NAME}" == "linux" && "${TRAVIS_BRANCH}" == "master" && "${TRA
   git config --global user.name "Yoshimura Yuu"
   git clone git@github.com:WORD-COINS/article-template-document.git
   cd article-template-document
-  mv ../main.pdf main.pdf
-  git add main.pdf
+  mv ../main-ptex.pdf main-ptex.pdf
+  mv ../main-luatex.pdf main-luatex.pdf
+  git add main-ptex.pdf main-luatex.pdf
   git commit -a -m "auto commit on travis $TRAVIS_JOB_NUMBER $TRAVIS_COMMIT"
   git push origin gh-pages:gh-pages
 fi

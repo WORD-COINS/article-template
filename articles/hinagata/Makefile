@@ -1,6 +1,6 @@
 MAKE         = make
 LATEXMK      = latexmk
-LATEXMKFLAG  = -halt-on-error
+LATEXMKFLAG += -halt-on-error
 CP           = cp
 RM           = rm
 
@@ -12,7 +12,6 @@ TEXFILES     = ../../texfiles
 
 CLASS        = word
 TEXDEPS      = $(foreach deps, $(CLASS).cls, $(TEXFILES)/$(deps))
-LATEXMKFLAG +=
 
 TEXDTX       = $(addsuffix .dtx, $(TEXFILES)/$(CLASS))
 TEXINS       = $(addsuffix .ins, $(TEXFILES)/$(CLASS))
@@ -26,13 +25,13 @@ all: $(SRC).pdf
 	$(LATEXMK) $(LATEXMKFLAG) $<
 
 continue:
-	LATEXMKFLAG+=-pvc
-	$(MAKE)
+	LATEXMKFLAG +=-pvc $(MAKE)
 
 $(TEXDEPS): $(TEXDTX) $(TEXINS)
-	$(MAKE) $(CLASS).cls -C $(TEXFILES)
+	LATEXMKFLAG="$(LATEXMKFLAG)" $(MAKE) $(CLASS).cls -C $(TEXFILES)
 	$(CP) -r $(foreach deps, $(TEXDEPS), $(deps)) ./
 
 clean:
+	$(MAKE) clean -C $(TEXFILES)
 	$(RM) -f $(TEXDEPS)
 	$(LATEXMK) -C
