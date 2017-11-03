@@ -14,7 +14,7 @@ install:
   - choco install make
   - curl -O https://raw.githubusercontent.com/y-yu/install-tex-appveyor/master/install-tex.sh
   - bash ./install-tex.sh
-  - tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended type1cm mdframed needspace newtx fontaxes everyhook svn-prov
+  - tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended type1cm mdframed needspace newtx fontaxes boondox everyhook svn-prov
 build_script:
   - cd articles/hinagata
   - make
