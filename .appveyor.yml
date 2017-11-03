@@ -20,6 +20,7 @@ build_script:
   - make
   - copy .\main.pdf .\main-ptex.pdf
   - make clean
-  - LATEXMKFLAG=-lualatex make
+  - set LATEXMKFLAG=-lualatex
+  - make
   - copy .\main.pdf .\main-luatex.pdf
   
