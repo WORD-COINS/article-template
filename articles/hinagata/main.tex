@@ -10,6 +10,11 @@
 }
 \usepackage{fancybox}
 \usepackage{url}
+\usepackage{hyperref}
+\ifluatex
+\else
+  \usepackage{pxjahyper}
+\fi
 
 \subtitle{ヘッダの見出し}
 \author{ほげ}
@@ -32,8 +37,7 @@ git checkout -b personal/$username$/$article\_name$
 cd ./articles
 cp -r ./hinagata ./my-article-name
 cd ./my-article-name
-autoconf
-./configure
+make
 \end{lstlisting}
 
 \subsubsection{Windows}
@@ -47,33 +51,26 @@ git checkout -b personal/$username$/$article\_name$
 cd ./articles
 cp -r ./hinagata ./my-article-name
 cd ./my-article-name
-cmake -DENABLE_LUATEX=OFF .
+make
 \end{lstlisting}
 
-\subsection{選択: Lua\LaTeX を使う}
+\subsection{Lua\LaTeX を使う}
 
 WORDでは新たにLua\LaTeX が使えるようになりました。
-使い方は、\lstinline|./configure|のかわりに\lstinline|./configure --enable-luatex|としてください。
-Windowsの場合は、\lstinline|cmake -DENABLE_LUATEX=OFF .|のかわりに
-\lstinline|cmake -DENABLE_LUATEX=ON .|としてください。
+
+\begin{description}
+  \item[macOS・Linux] \lstinline|make|のかわりに\lstinline|LATEXMKFLAG=-lualatex make|を利用する。
+ 
+  \item[Windows] \lstinline|make|の前に\lstinline|set LATEXMKFLAG=-lualatex|として、環境変数を設定する。
+\end{description}
 
 \section{記事を書く}
 
 記事を書いたら、\lstinline|make|コマンドでビルドできます。
-Windowsの場合は\lstinline|cmake|コマンドでビルドします。
-
-\subsection{macOS・Linux}
 
 \begin{lstlisting}
 git add *
 make
-\end{lstlisting}
-
-\subsection{Windows}
-
-\begin{lstlisting}
-git add *
-cmake --build .
 \end{lstlisting}
 
 これで\ovalbox{main.pdf}が生成されれば成功です。
@@ -92,26 +89,39 @@ git push origin personal/$username$/$article\_name$
 pushを成功させた場合には、ビルドの結果がslack\footnote{\url{https://word-ac.slack.com}}の\#jenkinsチャンネルに流れます。
 slackを見ていない場合は、\url{https://jenkins.word-ac.net/job/LaTeX/}および\url{https://gitiles.word-ac.net/}を見ると良いでしょう。
 
+\section{ヒラギノフォントを埋め込む}
+
+macOSを利用しているなど、手元のコンパイル環境でヒラギノフォントが利用可能な場合は、
+次の手順でヒラギノフォントを埋め込んだPDFファイルを作成できます。
+
+\subsection{p\LaTeX の場合}
+
+\begin{lstlisting}
+sudo cjk-gs-integrate --link-texmf --force
+sudo mktexlsr  
+sudo kanji-config-updmap-sys hiragino-elcapitan-pron
+\end{lstlisting}
+  
+この状態で\lstinline|make|することでヒラギノフォント埋め込みPDFが作成されます。
+
+\subsection{Lua\LaTeX の場合}
+
+\begin{description}
+  \item[macOS・Linux] \lstinline|LATEXMKFLAG=-lualatex make|のかわりに\lstinline|WORD_FONT=hiragino-pron LATEXMKFLAG=-lualatex make|を実行する
+
+  \item[Windows] \lstinline|make|の前に\lstinline|set WORD_FONT=hiragino-pron|を実行する
+\end{description}
+
 \section{トラブルシューティング}
 
 \subsection{偶数頁}
 
-編集作業をしていると、レイアウトの問題で偶数頁から開始していただくことがあります。その場合の対処法は、\TeX の処理系によって以下のように異なります。
+編集作業をしていると、レイアウトの問題で偶数頁から開始していただくことがあります。
 
-\subsubsection{p\LaTeX を使う場合}
-
-その場合は、プレアンブルに以下を追加してください。
+\lstinline|\documentclass|のオプションに\ovalbox{evenstart}をつけることで簡単にできます。
 
 \begin{lstlisting}[language=TeX, mathescape]
-\setcounter{page}{2}
-\end{lstlisting}
-
-\subsubsection{Lua\LaTeX を使う場合}
-
-\lstinline|\documentclass|のオプションに\ovalbox{swapheader}をつけることで簡単にできます。
-
-\begin{lstlisting}[language=TeX, mathescape]
-\documentclass[swapheader]{word-lua}
+\documentclass[evenstart]{word}
 \end{lstlisting}
 
 \section{鍵の登録}
@@ -124,7 +134,7 @@ pi8027, yyu, ioriveur, shinkbr, osyoyu, chris, nymphiumが部員を登録でき�
 問題があればslackの\#latexチャンネルや、編集会議で聞くと良いでしょう。
 
 直接詳しい人にSNSで聞く場合、@\_yyu\_\footnote{\url{https://twitter.com/_yyu_}}へ投げると早い。
-word-luaに関しては@Nymphium\footnote{\url{https://twitter.com/Nymphium}}か@azuma962\footnote{\url{https://twitter.com/azuma962}}へ。
-
+Lua\LaTeX に関しては@Nymphium\footnote{\url{https://twitter.com/Nymphium}}か@azuma962\footnote{\url{https://twitter.com/azuma962}}へ。
+クラスファイルの全体的な質問は@hid\_alma1026\footnote{\url{https://twitter.com/hid_alma1026}}へ。
 
 \end{document}
