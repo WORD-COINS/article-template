@@ -27,8 +27,6 @@ script:
   - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
       export WORD_FONT=hiragino-pron;
       make clean;
-      make;
-      make clean;
       LATEXMKFLAG=-lualatex make;
     fi
   - cd ../../
