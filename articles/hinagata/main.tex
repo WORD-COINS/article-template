@@ -1,4 +1,8 @@
 \documentclass{word}
+% 記事が偶数はじまりの場合は上の\documentclassを削除して、
+% 次の\documentclassをアンコメントします。
+% \documnetclass[evenstart]{word}
+
 \usepackage{listings}
 \lstset{
   basicstyle=\ttfamily,
@@ -17,6 +21,10 @@
 \fi
 
 \subtitle{ヘッダの見出し}
+
+% 著者名の前にある「文 編集部」を削除する場合は次のコマンドをアンコメントします。
+% \authormark{}
+
 \author{ほげ}
 
 \begin{document}
@@ -122,6 +130,16 @@ sudo kanji-config-updmap-sys hiragino-elcapitan-pron
 
 \begin{lstlisting}[language=TeX, mathescape]
 \documentclass[evenstart]{word}
+\end{lstlisting}
+
+\subsection{「文 編集部」の削除}
+
+編集部以外のメンバーが執筆する場合「文 編集部」は必要ありません。
+「文　編集部」は以下のコマンドを\lstinline|\documentclass|から
+\lstinline|\begin{document}|の間のどこかに書くことで消せます。
+
+\begin{lstlisting}[language=TeX, mathescape]
+\authormark{}    
 \end{lstlisting}
 
 \section{鍵の登録}
