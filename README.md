@@ -32,22 +32,22 @@ WORDの記事の雛形
 これで`main.pdf`が生成されれば成功です。
 あとは`main.tex`を編集すれば記事が出来ます。
 
-## 「文　編集部」の消し方
+### 「文　編集部」の消し方
+
 WORD編集部の人間ではない場合、著者の前に付く「文　編集部」を削除したくなると思います。
-そういう場合は`\subtitle`の後（少なくとも`\begin{document}`の前）などに次のようなコマンドを追加してください。
+「文　編集部」は以下のコマンドでも消すことができます。
 
 ```tex
-\makeatletter
-\renewcommand{\@authormark}{}
-\makeatother
+\authormark{}
 ```
-このようにすると、「文　編集部」が消滅します。
 
-## 偶数頁
-レイアウトの問題で、偶数頁から開始していただくことがあります。その場合は、プレアンブルに以下を追加してください。
+### 偶数頁
+
+また、偶数頁始まりも`\documentclass`のオプションに`evenstart`をつけることで簡単にできます。
 
 ```tex
-\setcounter{page}{2}
+\documentclass[evenstart]{word}
+%.....
 ```
 
 ## LuaLaTeXを使う
@@ -62,22 +62,6 @@ WORDでは新たにLuaLaTeXが使えるようになりました。
 ### Windows
 
 **使い方(7)** で`LATEXMKFLAG=-lualatex make`としてください。
-
-### 「文　編集部」の消し方
-
-LuaLaTeXでは「文　編集部」は以下のコマンドでも消すことができます。
-
-```tex
-\authormark{}
-```
-
-### 偶数頁
-また、偶数頁始まりも`\documentclass`のオプションに`swapheader`をつけていただくことで簡単にできます。
-
-```TeX
-\documentclass[swapheader]{word-lua}
-%.....
-```
 
 ## 質問
 
