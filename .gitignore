@@ -13,12 +13,7 @@
 *.synctex.gz
 *.fdb_latexmk
 articles/*/word.cls
-articles/*/word-lua.cls
-articles/*/word.clo
-articles/*/configure
-articles/hinagata/Makefile
-articles/*/config.status
-articles/*/autom4te.cache
 articles/*/CMakeFiles
+articles/*/autom4te.cache
 articles/*/cmake_install.cmake
 articles/*/CMakeCache.txt

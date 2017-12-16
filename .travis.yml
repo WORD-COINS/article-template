@@ -6,7 +6,6 @@ dist: trusty
 sudo: false
 cache:
   directories:
-    - "$HOME/Library/texlive/2017basic/texmf-var/luatex-cache"
     - "$HOME/texlive/2017/texmf-var/luatex-cache"
 before_install:
   - wget https://raw.githubusercontent.com/y-yu/install-tex-travis/master/install-tex.sh
@@ -14,34 +13,21 @@ before_install:
   - chmod +x install-tex.sh tlmgr.sh
 install:
   - . ./install-tex.sh
-  - ./tlmgr.sh update --self --all || echo "ignore errors"
-  - ./tlmgr.sh install latexmk collection-luatex collection-langjapanese collection-fontsrecommended type1cm mdframed needspace everyhook svn-prov
+  - ./tlmgr.sh install latexmk collection-luatex collection-langjapanese collection-fontsrecommended type1cm mdframed needspace newtx fontaxes boondox everyhook svn-prov
   - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
-      sudo fmtutil-sys --all;
+      fmtutil-sys --all;
     fi
 script:
   - cd articles/hinagata
-  - autoconf
-  - ./configure
   - make
   - cp main.pdf ../../main-ptex.pdf
-  - ./configure --enable-luatex
-  - make
+  - make clean
+  - LATEXMKFLAG=-lualatex make
   - cp main.pdf ../../main-luatex.pdf
   - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
       export WORD_FONT=hiragino-pron;
       make clean;
-      make;
-    fi
-  - cmake -DENABLE_LUATEX=OFF .
-  - make
-  - make clean
-  - cmake -DENABLE_LUATEX=ON .
-  - make
-  - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
-      export WORD_FONT=hiragino-pron;
-      make clean;
-      make;
+      LATEXMKFLAG=-lualatex make;
     fi
   - cd ../../
 after_success:
