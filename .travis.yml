@@ -4,6 +4,9 @@ os:
   - linux
 dist: trusty
 sudo: false
+matrix:
+  allow_failures:
+    - os: osx
 cache:
   directories:
     - "$HOME/texlive/2017/texmf-var/luatex-cache"
