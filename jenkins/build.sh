@@ -3,7 +3,7 @@
 # Jenkinsから呼び出されて、articlesの中にあるフォルダへ移動して`make`を実行します。
 # `make`に成功した場合、PDFはpushされた日時とコミットIDに基づいて表示用のフォルダへコピーされます。
 
-set -e
+set -ex
 
 # Checkout the branch
 git checkout "$branch"
