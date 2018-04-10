@@ -33,6 +33,10 @@ script:
       LATEXMKFLAG=-lualatex make;
     fi
   - cd ../../
+  - cd articles/back_cover
+  - make
+  - cp back_cover.pdf ../../
+  - cd ../../
 after_success:
   - ./travis/deploy.sh
 env:

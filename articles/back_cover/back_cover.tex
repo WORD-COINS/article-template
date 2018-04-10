@@ -1,0 +1,58 @@
+% ---
+% 裏表紙生成用texファイル
+% 同梱の `config.tex` をイジると、内容の変更ができます
+% ---
+\documentclass{word}
+\usepackage{graphicx, framed}
+\makeatletter
+\renewcommand{\large}{\@setfontsize\large{30pt}{30pt}}
+\renewcommand{\normalsize}{\@setfontsize\normalsize{24pt}{24pt}}
+\renewcommand{\small}{\@setfontsize\small{18pt}{18pt}}
+\renewcommand{\footnotesize}{\@setfontsize\footnotesize{14pt}{14pt}}
+\newcommand*{\circulation}[1]{\gdef\@circulation{#1}}
+\makeatother
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.5}
+%%\defaultfontfeatures{Mapping=tex-text}
+%%\defaultjfontfeatures{Mapping=tex-text}
+%%\setromanfont{TeX Gyre Termes}
+\newcommand*{\vstretch}[1]{\vspace*{\stretch{#1}}}
+
+\input config.tex
+
+\begin{document}
+情報科学類誌
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{wordlogo.pdf}
+\end{figure}
+
+\vstretch{3}
+
+\makeatletter
+\begin{center}
+  {\large \@title}
+\end{center}
+
+\vstretch{4}
+
+\begin{framed}
+  \centering
+  \begin{tabular}{ll}
+    発行者 & 情報科学類長 \\
+    編集長 & \@author{} \\
+    制作・編集 & \shortstack[l]{%
+                  \footnotesize 筑波大学情報学群 \\%
+                  \footnotesize 情報科学類WORD編集部 \\%
+                  \footnotesize （第三エリアC棟212号室）}
+  \end{tabular}
+
+  \vspace*{0.3em}
+
+  {\small \@date{}\hspace{1em}初版第1刷発行\hfill{}（\@circulation{}部）}
+
+  \vspace*{0.2em}
+\end{framed}
+\makeatother
+\end{document}
