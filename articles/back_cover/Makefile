@@ -20,16 +20,18 @@ TEXINS       = $(addsuffix .ins, $(TEXFILES)/$(CLASS))
 
 all: $(SRC).pdf
 
-%.pdf: %.tex $(TEXDEPS)
+%.pdf: %.tex $(CLASS).cls
 	$(MAKE) $(TEXDEPS)
 	$(LATEXMK) $(LATEXMKFLAG) $<
 
 continue:
 	LATEXMKFLAG +=-pvc $(MAKE)
 
+$(CLASS).cls: $(TEXDEPS)
+	$(CP) -r $(foreach deps, $(TEXDEPS), $(deps)) ./
+
 $(TEXDEPS): $(TEXDTX) $(TEXINS)
 	LATEXMKFLAG="$(LATEXMKFLAG)" $(MAKE) $(CLASS).cls -C $(TEXFILES)
-	$(CP) -r $(foreach deps, $(TEXDEPS), $(deps)) ./
 
 clean:
 	$(MAKE) clean -C $(TEXFILES)
