@@ -10,6 +10,7 @@ artifacts:
   - path: .\articles\hinagata\main-luatex.pdf
     name: LuaTeX
   - path: .\articles\back_cover\back_cover.pdf
+    name: BackCover
 install:
   - git submodule update --init
   - choco install make
