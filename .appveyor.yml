@@ -9,6 +9,7 @@ artifacts:
     name: pTeX
   - path: .\articles\hinagata\main-luatex.pdf
     name: LuaTeX
+  - path: .\articles\back_cover\back_cover.pdf
 install:
   - git submodule update --init
   - choco install make
@@ -23,4 +24,5 @@ build_script:
   - set LATEXMKFLAG=-lualatex
   - make
   - copy .\main.pdf .\main-luatex.pdf
-  
+  - cd ../back_cover
+  - make
