@@ -35,7 +35,7 @@ script:
   - cd ../../
   - cd articles/back_cover
   - make
-  - cp back_cover.pdf ../../
+  - cp main.pdf ../../back_cover.pdf
   - cd ../../
 after_success:
   - ./travis/deploy.sh

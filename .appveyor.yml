@@ -27,3 +27,4 @@ build_script:
   - copy .\main.pdf .\main-luatex.pdf
   - cd ../back_cover
   - make
+  - copy .\main.pdf .\back_cover.pdf

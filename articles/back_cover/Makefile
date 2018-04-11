@@ -4,7 +4,7 @@ LATEXMKFLAG += -halt-on-error
 CP           = cp
 RM           = rm
 
-SRC          = back_cover
+SRC          = main
 
 TARGET       = $(addsuffix .pdf, $(SRC))
 
