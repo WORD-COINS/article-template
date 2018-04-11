@@ -12,9 +12,9 @@ git submodule update --init --recursive
 # Determine the article's directory
 cd articles
 for i in *; do
-  if [ "$i" != "hinagata" ] && [ "$article_dir" = "" ]; then
+  if [ "$i" != "hinagata" ] && [ "$i" != "back_cover" ] && [ "$article_dir" = "" ]; then
     article_dir="$i"
-  elif [ "$i" != "hinagata" ]; then
+  elif [ "$i" != "hinagata" ] && [ "$i" != "back_cover" ]; then
     echo "There are some aritcle's directories. Aborting."
     exit 1
   fi

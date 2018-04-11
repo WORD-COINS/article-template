@@ -9,12 +9,14 @@ artifacts:
     name: pTeX
   - path: .\articles\hinagata\main-luatex.pdf
     name: LuaTeX
+  - path: .\articles\back_cover\back_cover.pdf
+    name: BackCover
 install:
   - git submodule update --init
   - choco install make
   - curl -O https://raw.githubusercontent.com/y-yu/install-tex-appveyor/master/install-tex.sh
   - bash ./install-tex.sh
-  - tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended type1cm mdframed needspace newtx fontaxes boondox everyhook svn-prov
+  - tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended type1cm mdframed needspace newtx fontaxes boondox everyhook svn-prov framed
 build_script:
   - cd articles/hinagata
   - make
@@ -23,4 +25,5 @@ build_script:
   - set LATEXMKFLAG=-lualatex
   - make
   - copy .\main.pdf .\main-luatex.pdf
-  
+  - cd ../back_cover
+  - make

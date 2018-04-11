@@ -16,7 +16,7 @@ before_install:
   - chmod +x install-tex.sh tlmgr.sh
 install:
   - . ./install-tex.sh
-  - ./tlmgr.sh install latexmk collection-luatex collection-langjapanese collection-fontsrecommended type1cm mdframed needspace newtx fontaxes boondox everyhook svn-prov
+  - ./tlmgr.sh install latexmk collection-luatex collection-langjapanese collection-fontsrecommended type1cm mdframed needspace newtx fontaxes boondox everyhook svn-prov framed
   - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
       fmtutil-sys --all;
     fi
@@ -32,6 +32,10 @@ script:
       make clean;
       LATEXMKFLAG=-lualatex make;
     fi
+  - cd ../../
+  - cd articles/back_cover
+  - make
+  - cp back_cover.pdf ../../
   - cd ../../
 after_success:
   - ./travis/deploy.sh

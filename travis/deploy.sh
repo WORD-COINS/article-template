@@ -12,7 +12,8 @@ if [[ "${TRAVIS_OS_NAME}" == "linux" && "${TRAVIS_BRANCH}" == "master" && "${TRA
   cd article-template-document
   mv ../main-ptex.pdf main-ptex.pdf
   mv ../main-luatex.pdf main-luatex.pdf
-  git add main-ptex.pdf main-luatex.pdf
+  mv ../back_cover.pdf back_cover.pdf
+  git add main-ptex.pdf main-luatex.pdf back_cover.pdf
   git commit -a -m "auto commit on travis $TRAVIS_JOB_NUMBER $TRAVIS_COMMIT"
   git push origin gh-pages:gh-pages
 fi
