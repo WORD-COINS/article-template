@@ -9,7 +9,7 @@
 *.omc
 .omakedb*
 *.ps
-*.pdf
+main.pdf
 *.synctex.gz
 *.fdb_latexmk
 articles/*/word.cls
