@@ -23,10 +23,12 @@ install:
 script:
   - cd articles/hinagata
   - make
-  - cp main.pdf ../../main-ptex.pdf
+  - cp main_odd.pdf ../../main_odd-ptex.pdf
+  - cp main_even.pdf ../../main_even-ptex.pdf
   - make clean
   - LATEXMKFLAG=-lualatex make
-  - cp main.pdf ../../main-luatex.pdf
+  - cp main_odd.pdf ../../main_odd-luatex.pdf
+  - cp main_even.pdf ../../main_even-luatex.pdf
   - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
       export WORD_FONT=hiragino-pron;
       make clean;
