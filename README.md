@@ -29,7 +29,7 @@ WORDの記事の雛形
 6. `cd ./my-article-name`
 7. `make`
 
-これで`main.pdf`が生成されれば成功です。
+これで`main_odd.pdf`、`main_even.pdf`が生成されれば成功です。
 あとは`main.tex`を編集すれば記事が出来ます。
 
 ### 「文　編集部」の消し方

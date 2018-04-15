@@ -4,9 +4,9 @@ LATEXMKFLAG += -halt-on-error
 CP           = cp
 RM           = rm
 
-SRC          = main
+SRCS          = main_odd main_even
 
-TARGET       = $(addsuffix .pdf, $(SRC))
+TARGET       = $(foreach src,$(SRCS), $(addsuffix .pdf, $(src)))
 
 TEXFILES     = ../../texfiles
 
@@ -18,7 +18,7 @@ TEXINS       = $(addsuffix .ins, $(TEXFILES)/$(CLASS))
 
 .PHONY: all continue clean
 
-all: $(SRC).pdf
+all: $(TARGET)
 
 %.pdf: %.tex $(CLASS).cls
 	$(MAKE) $(TEXDEPS)
