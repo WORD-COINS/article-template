@@ -6,11 +6,13 @@ cache:
   - 'C:\texlive\2017\texmf-var\luatex-cache'
 artifacts:
   - path: .\articles\hinagata\main_odd-ptex.pdf
-    path: .\articles\hinagata\main_even-ptex.pdf
-    name: pTeX
+    name: pTeX-odd
+  - path: .\articles\hinagata\main_even-ptex.pdf
+    name: pTeX-even
   - path: .\articles\hinagata\main_odd-luatex.pdf
+    name: LuaTe-odd
   - path: .\articles\hinagata\main_even-luatex.pdf
-    name: LuaTeX
+    name: LuaTeX-even
   - path: .\articles\back_cover\back_cover.pdf
     name: BackCover
 install:
