@@ -50,6 +50,12 @@ WORD編集部の人間ではない場合、著者の前に付く「文　編集�
 \documentclass[evenstart]{word}
 %.....
 ```
+#### main_odd.texとmain_even.tex[2018/04]
+
+偶奇両版同時に生成した方が後々手間が少ないだろうということで、
+ドキュメントクラスとオプションを設定済みの、奇数ページ始まりの`main_odd.tex`と偶数ページ始まりの`main_even.tex`を用意し、
+`main.tex`を読み込む形にしました。編集するのは今まで通り`main.tex`です。
+
 
 ## LuaLaTeXを使う
 

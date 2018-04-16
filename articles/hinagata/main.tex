@@ -1,8 +1,3 @@
-%\documentclass{word}
-% 記事が偶数はじまりの場合は上の\documentclassを削除して、
-% 次の\documentclassをアンコメントします。
-% \documnetclass[evenstart]{word}
-
 \usepackage{listings}
 \lstset{
   basicstyle=\ttfamily,
@@ -81,7 +76,7 @@ git add *
 make
 \end{lstlisting}
 
-これで\ovalbox{main.pdf}が生成されれば成功です。
+これで\ovalbox{main_odd.pdf}、\ovalbox{main_even.pdf}が生成されれば成功です。
 あとは\ovalbox{main.tex}を編集すれば記事が出来ます。
 
 \section{Gitサーバにpushする}
@@ -131,6 +126,10 @@ sudo kanji-config-updmap-sys hiragino-elcapitan-pron
 \begin{lstlisting}[language=TeX, mathescape]
 \documentclass[evenstart]{word}
 \end{lstlisting}
+
+\subsubsection*{2018/04}
+新しいバージョンでは\ovalbox{main_odd.tex}と\ovalbox{main_even.tex}にドキュメントクラスを設定し、\ovalbox{\input{main.tex}}を
+読み込むようになったので、このテンプレートを用いる場合は特に変更を行う必要はありません。
 
 \subsection{「文 編集部」の削除}
 
