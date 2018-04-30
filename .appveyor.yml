@@ -1,9 +1,9 @@
 image: Visual Studio 2015
 environment:
-  PATH: '%PATH%;C:\texlive\2017\bin\win32'
+  PATH: '%PATH%;C:\texlive\bin\win32'
 cache:
-  - 'C:\texlive\2017\texmf-var\fonts\cache'
-  - 'C:\texlive\2017\texmf-var\luatex-cache'
+  - 'C:\texlive\texmf-var\fonts\cache'
+  - 'C:\texlive\texmf-var\luatex-cache'
 artifacts:
   - path: .\articles\hinagata\main-ptex.pdf
     name: pTeX
