@@ -55,14 +55,18 @@ WORD編集部の人間ではない場合、著者の前に付く「文　編集�
 
 WORDでは新たにLuaLaTeXが使えるようになりました。
 
-### macOS・Linux
+### macOS・Linux・Windows
 
-上記の **使い方(7)** で`LATEXMKFLAG=-lualatex make`としてください。
-以降は`make`のみでOKです。
+1. **使い方(7)** の`make`の前に`Makefile`をエディターで開く
+2. `LATEXMKFLAG`の部分を次のように書き換える
 
-### Windows
+    ```diff
+    - LATEXMKFLAG += -halt-on-error
+    + LATEXMKFLAG += -halt-on-error -lualatex
+    ```
+3. `make`を実行する
 
-**使い方(7)** で`LATEXMKFLAG=-lualatex make`としてください。
+このようにすることでJenkins上でもLuaLaTeXが利用されるようになります。
 
 ## 質問
 

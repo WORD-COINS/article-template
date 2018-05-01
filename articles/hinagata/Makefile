@@ -1,6 +1,10 @@
 MAKE         = make
 LATEXMK      = latexmk
+
 LATEXMKFLAG += -halt-on-error
+# LuaLaTeXを利用するときは上の行をコメントアウトし、下記の行をアンコメントする
+# LATEXMKFLAG += -halt-on-error -lualatex
+
 CP           = cp
 RM           = rm
 

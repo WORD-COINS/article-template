@@ -3,6 +3,7 @@
 % 次の\documentclassをアンコメントします。
 % \documnetclass[evenstart]{word}
 
+\usepackage[svgnames]{xcolor}
 \usepackage{listings}
 \lstset{
   basicstyle=\ttfamily,
@@ -11,6 +12,16 @@
   numbers=left,
   breaklines=true,
   title=\lstname,
+}
+
+\definecolor{diffstart}{named}{Grey}
+\definecolor{diffincl}{named}{Green}
+\definecolor{diffrem}{named}{OrangeRed}
+
+\lstdefinelanguage{diff}{
+  morecomment=[f][\color{diffstart}]{@@},
+  morecomment=[f][\color{diffincl}]{+\ },
+  morecomment=[f][\color{diffrem}]{-\ },
 }
 \usepackage{fancybox}
 \usepackage{url}
@@ -65,12 +76,21 @@ make
 \subsection{Lua\LaTeX を使う}
 
 WORDでは新たにLua\LaTeX が使えるようになりました。
+次のようにすることで利用できます。
 
-\begin{description}
-  \item[macOS・Linux] \lstinline|make|のかわりに\lstinline|LATEXMKFLAG=-lualatex make|を利用する。
- 
-  \item[Windows] \lstinline|make|の前に\lstinline|set LATEXMKFLAG=-lualatex|として、環境変数を設定する。
-\end{description}
+\begin{enumerate}
+  \item \lstinline|make|の前に\ovalbox{Makefile}をエディターで開く
+  \item \lstinline|LATEXMKFLAG|の部分を次のように書き換える
+\begin{lstlisting}[language=diff]
+- LATEXMKFLAG += -halt-on-error
++ LATEXMKFLAG += -halt-on-error -lualatex
+\end{lstlisting}
+
+  \item \lstinline|make|を実行する
+\end{enumerate}
+
+これ以降は\lstinline|make|のみでLua\LaTeX 利用されますし、
+この状態でGitにpushするとJenkins上でもLua\LaTeX が利用されます。
 
 \section{記事を書く}
 
@@ -115,7 +135,7 @@ sudo kanji-config-updmap-sys hiragino-elcapitan-pron
 \subsection{Lua\LaTeX の場合}
 
 \begin{description}
-  \item[macOS・Linux] \lstinline|LATEXMKFLAG=-lualatex make|のかわりに\lstinline|WORD_FONT=hiragino-pron LATEXMKFLAG=-lualatex make|を実行する
+  \item[macOS・Linux] \lstinline|make|のかわりに\lstinline|WORD_FONT=hiragino-pron make|を実行する
 
   \item[Windows] \lstinline|make|の前に\lstinline|set WORD_FONT=hiragino-pron|を実行する
 \end{description}
