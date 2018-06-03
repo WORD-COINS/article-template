@@ -7,9 +7,11 @@
 *.dvi
 *.toc
 *.omc
+*.out
 .omakedb*
 *.ps
 main.pdf
+word.cls
 *.synctex.gz
 *.fdb_latexmk
 articles/*/word.cls

@@ -1,0 +1,11 @@
+version: '3.4'
+services:
+  article_build:
+    image: wordcoins/article-template:latest
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+      cache_from:
+        - wordcoins/article-template:latest
+    volumes:
+      - .:/workdir

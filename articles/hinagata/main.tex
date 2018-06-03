@@ -1,44 +1,20 @@
-\documentclass{word}
-% 記事が偶数はじまりの場合は上の\documentclassを削除して、
-% 次の\documentclassをアンコメントします。
-% \documnetclass[evenstart]{word}
+\makeatletter
+\def\input@path{{../../}}
+\makeatother
+ 
+\documentclass[../../main]{subfiles}
+  
+\begin{document}
 
-\usepackage[svgnames]{xcolor}
-\usepackage{listings}
-\lstset{
-  basicstyle=\ttfamily,
-  commentstyle=\textit,
-  frame=trBL,
-  numbers=left,
-  breaklines=true,
-  title=\lstname,
-}
-
-\definecolor{diffstart}{named}{Grey}
-\definecolor{diffincl}{named}{Green}
-\definecolor{diffrem}{named}{OrangeRed}
-
-\lstdefinelanguage{diff}{
-  morecomment=[f][\color{diffstart}]{@@},
-  morecomment=[f][\color{diffincl}]{+\ },
-  morecomment=[f][\color{diffrem}]{-\ },
-}
-\usepackage{fancybox}
-\usepackage{url}
-\usepackage{hyperref}
-\ifluatex
-\else
-  \usepackage{pxjahyper}
-\fi
+% Listingsの番号再定義、この命令はdocumentがはじまってからでないとダメ
+\renewcommand{\thelstlisting}{\arabic{lstlisting}}
 
 \subtitle{ヘッダの見出し}
 
 % 著者名の前にある「文 編集部」を削除する場合は次のコマンドをアンコメントします。
 % \authormark{}
 
-\author{ほげ}
-
-\begin{document}
+\author{編集部 太郎}
 
 \chapter{記事の書き方}
 

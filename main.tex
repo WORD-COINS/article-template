@@ -1,0 +1,62 @@
+\documentclass{word}
+
+\usepackage{graphicx}
+\usepackage{framed}
+\usepackage[svgnames]{xcolor}
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily,
+  commentstyle=\textit,
+  frame=trBL,
+  numbers=left,
+  breaklines=true,
+  title=\lstname,
+}
+
+\definecolor{diffstart}{named}{Grey}
+\definecolor{diffincl}{named}{Green}
+\definecolor{diffrem}{named}{OrangeRed}
+
+\lstdefinelanguage{diff}{
+  morecomment=[f][\color{diffstart}]{@@},
+  morecomment=[f][\color{diffincl}]{+\ },
+  morecomment=[f][\color{diffrem}]{-\ },
+}
+\usepackage{fancybox}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{subfiles}
+
+\begin{document}
+
+% Listingsの番号再定義、この命令はdocumentがはじまってからでないとダメ
+\renewcommand{\thelstlisting}{\arabic{lstlisting}}
+
+% 目次（チャプターレベルしか目次に表示しない）
+\setcounter{tocdepth}{0}
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+
+% 目次のページを無視する
+\setcounter{page}{1}
+
+% 記事（サンプル）
+\LetLtxMacro\latexincludegraphics\includegraphics
+\renewcommand\includegraphics[2][]{%
+  \latexincludegraphics[#1]{./articles/hinagata/#2}
+}
+\subfile{./articles/hinagata/main.tex}
+\LetLtxMacro\includegraphics\latexincludegraphics
+\newpage
+
+% 裏表紙
+\thispagestyle{empty}
+\LetLtxMacro\latexincludegraphics\includegraphics
+\renewcommand\includegraphics[2][]{%
+  \latexincludegraphics[#1]{./articles/back_cover/#2}
+}
+\subfile{./articles/back_cover/main.tex}
+\LetLtxMacro\includegraphics\latexincludegraphics
+
+\end{document}
