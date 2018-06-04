@@ -13,10 +13,6 @@ pipelines:
           - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
           - docker-compose pull
           - docker-compose build
-          - cd texfiles
-          - docker-compose pull
-          - docker-compose up --exit-code-from texfiles_build
-          - cd ..
           - docker-compose up --exit-code-from article_build
           - ./pipeline/deploy_image.sh
         artifacts:

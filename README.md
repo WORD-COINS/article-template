@@ -4,18 +4,13 @@ WORDの記事の雛形
 ## 必要なもの
 
 - [Git](https://git-scm.com/)
-- [Docker](https://www.docker.com/)
-- [docker-compose](https://github.com/docker/compose)
+- [TeXLive](https://www.tug.org/texlive/)または[MacTeX](http://www.tug.org/mactex/)
+- [GNU Make](https://www.gnu.org/software/make)
 
 ## コンパイル
 
 1. `git submodule update --init`
-2. `cd texfiles`
-3. `docker-compose pull`
-4. `docker-compose up`
-5. `cd ..`
-6. `docker-compose pull`
-7. `docker-compose up`
+2. `make`
 
 ## 編集の仕方
 
@@ -31,28 +26,22 @@ WORDの記事の雛形
 
 ```tex
 % 記事（サンプル）
-\LetLtxMacro\latexincludegraphics\includegraphics
-\renewcommand\includegraphics[2][]{%
-  \latexincludegraphics[#1]{./articles/hinagata/#2}
-}
-\subfile{./articles/hinagata/main.tex}
-\LetLtxMacro\includegraphics\latexincludegraphics
-\newpage
+\article{./articles/hinagata}
+
+% 裏表紙
+\article{./articles/back_cover}
 ```
 
-これをコピーして、パスの部分を次のように自分の記事のディレクトリに変更します。
+パスの部分を次のように自分の記事のディレクトリに変更した`\article`コマンドを挿入します。
 
 ```diff
  % 記事（サンプル）
- \LetLtxMacro\latexincludegraphics\includegraphics
- \renewcommand\includegraphics[2][]{%
--  \latexincludegraphics[#1]{./articles/hinagata/#2}
-+  \latexincludegraphics[#1]{./articles/my_article/#2}
- }
-- \subfile{./articles/hinagata/main.tex}
-+ \subfile{./articles/my_article/main.tex} 
- \LetLtxMacro\includegraphics\latexincludegraphics
- \newpage
+ \article{./articles/hinagata}
+
++\article{./articles/my_article}
+
+ % 裏表紙
+ \article{./articles/back_cover}
 ```
 
 ### 3. 記事を編集する
