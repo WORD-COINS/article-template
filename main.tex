@@ -33,13 +33,13 @@
 \renewcommand{\thelstlisting}{\arabic{lstlisting}}
 
 % 目次（チャプターレベルしか目次に表示しない）
+\frontmatter
 \setcounter{tocdepth}{0}
 \thispagestyle{empty}
 \tableofcontents
 \newpage
 
-% 目次のページを無視する
-\setcounter{page}{1}
+\mainmatter
 
 % 記事（サンプル）
 \LetLtxMacro\latexincludegraphics\includegraphics
