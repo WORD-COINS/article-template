@@ -1,72 +1,72 @@
 WORDの記事の雛形
 ===================
 
-[![Build Status](https://travis-ci.org/WORD-COINS/article-template.svg?branch=master)](https://travis-ci.org/WORD-COINS/article-template)
-[![Build status](https://ci.appveyor.com/api/projects/status/v38n9xspthe9su67?svg=true)](https://ci.appveyor.com/project/y-yu/article-template)
+## 必要なもの
 
-これはGitHubで完結したWORDの記事の雛形です。
-鍵登録が出来ない場合や、WORD編集部以外のメンバーに執筆してもらう場合に利用してもらって下さい。
+- [Git](https://git-scm.com/)
+- [Docker](https://www.docker.com/)
+- [docker-compose](https://github.com/docker/compose)
 
-## 使い方
+## コンパイル
 
-### macOS・Linux
+1. `git submodule update --init`
+2. `cd texfiles`
+3. `docker-compose pull`
+4. `docker-compose up`
+5. `cd ..`
+6. `docker-compose pull`
+7. `docker-compose up`
 
-1. `git clone https://github.com/WORD-COINS/article-template.git`
-2. `cd ./article-template`
-3. `git submodule update --init`
-4. `cd ./articles`
-5. `cp -r ./hinagata ./my-article-name`
-6. `cd ./my-article-name`
-7. `make`
+## 編集の仕方
 
-### Windows
+### 1. 記事のディレクトリを作る
 
-1. `git clone https://github.com/WORD-COINS/article-template.git`
-2. `cd ./article-template`
-3. `git submodule update --init`
-4. `cd ./articles`
-5. `cp -r ./hinagata ./my-article-name`
-6. `cd ./my-article-name`
-7. `make`
+まず`articles`フォルダの`hinagata`をコピーして、任意の名前をつけます。
+このときの名前はなんでも構いませんが日本語を使うとややこしくなるのでやめましょう。
+このときのディレクトリ名をここでは`my_article`としたとして話をすすめます。
 
-これで`main.pdf`が生成されれば成功です。
-あとは`main.tex`を編集すれば記事が出来ます。
+### 2. 記事を目次に加える
 
-### 「文　編集部」の消し方
+リポジトリ直下にある`main.tex`を見てみましょう。ファイル中盤に次のような記述があるはずです。
+
+```tex
+% 記事（サンプル）
+\LetLtxMacro\latexincludegraphics\includegraphics
+\renewcommand\includegraphics[2][]{%
+  \latexincludegraphics[#1]{./articles/hinagata/#2}
+}
+\subfile{./articles/hinagata/main.tex}
+\LetLtxMacro\includegraphics\latexincludegraphics
+\newpage
+```
+
+これをコピーして、パスの部分を次のように自分の記事のディレクトリに変更します。
+
+```diff
+ % 記事（サンプル）
+ \LetLtxMacro\latexincludegraphics\includegraphics
+ \renewcommand\includegraphics[2][]{%
+-  \latexincludegraphics[#1]{./articles/hinagata/#2}
++  \latexincludegraphics[#1]{./articles/my_article/#2}
+ }
+- \subfile{./articles/hinagata/main.tex}
++ \subfile{./articles/my_article/main.tex} 
+ \LetLtxMacro\includegraphics\latexincludegraphics
+ \newpage
+```
+
+### 3. 記事を編集する
+
+手順（1）で作成したディレクトリの中にあるファイル`./articles/my_article/main.tex`を編集することで、記事をつくれます。
+
+#### 「文　編集部」の消し方
 
 WORD編集部の人間ではない場合、著者の前に付く「文　編集部」を削除したくなると思います。
-「文　編集部」は以下のコマンドを`\documentclass`から`\begin{document}`の間の
-どこかに書くことで消せます。
+「文　編集部」は以下のコマンドを`\begin{document}`の直後に書くことで消せます。
 
 ```tex
 \authormark{}
 ```
-
-### 偶数頁
-
-また、偶数頁始まりも`\documentclass`のオプションに`evenstart`をつけることで簡単にできます。
-
-```tex
-\documentclass[evenstart]{word}
-%.....
-```
-
-## LuaLaTeXを使う
-
-WORDでは新たにLuaLaTeXが使えるようになりました。
-
-### macOS・Linux・Windows
-
-1. **使い方(7)** の`make`の前に`Makefile`をエディターで開く
-2. `LATEXMKFLAG`の部分を次のように書き換える
-
-    ```diff
-    - LATEXMKFLAG += -halt-on-error
-    + LATEXMKFLAG += -halt-on-error -lualatex
-    ```
-3. `make`を実行する
-
-このようにすることでJenkins上でもLuaLaTeXが利用されるようになります。
 
 ## 質問
 

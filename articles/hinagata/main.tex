@@ -14,119 +14,59 @@
 % 著者名の前にある「文 編集部」を削除する場合は次のコマンドをアンコメントします。
 % \authormark{}
 
-\author{編集部 太郎}
+\author{情報 太郎}
 
-\chapter{記事の書き方}
+\chapter{記事を執筆しよう}
 
-\section{まずはじめに}
+\section{環境を準備する}
 
-\subsection{p\LaTeX を使う}
+WORDの記事をコンパイルするにあたって、\TeX Liveといった
+\TeX のツールセットは一切インストールする必要はありません。
+コンパイルに必要なツールは下記です。
 
-\subsubsection{macOS・Linux}
+\begin{itemize}
+  \item \href{https://git-scm.com}{Git}
+  \item \href{https://www.docker.com/}{Docker}
+  \item \href{https://github.com/docker/compose}{docker-compose}
+\end{itemize}
 
-$article\_name$は適当な名前として、以下のようなコマンドでブランチを分けましょう。
+\section{コンパイルする}
 
-\begin{lstlisting}[mathescape]
-git submodule update --init
-git checkout -b personal/$username$/$article\_name$
-cd ./articles
-cp -r ./hinagata ./my-article-name
-cd ./my-article-name
-make
-\end{lstlisting}
-
-\subsubsection{Windows}
-
-WORDクラスファイルはWindowsでもコンパイルすることができます。
-次のようにコマンドを実行します。
-
-\begin{lstlisting}[mathescape]
-git submodule update --init
-git checkout -b personal/$username$/$article\_name$
-cd ./articles
-cp -r ./hinagata ./my-article-name
-cd ./my-article-name
-make
-\end{lstlisting}
-
-\subsection{Lua\LaTeX を使う}
-
-WORDでは新たにLua\LaTeX が使えるようになりました。
-次のようにすることで利用できます。
-
-\begin{enumerate}
-  \item \lstinline|make|の前に\ovalbox{Makefile}をエディターで開く
-  \item \lstinline|LATEXMKFLAG|の部分を次のように書き換える
-\begin{lstlisting}[language=diff]
-- LATEXMKFLAG += -halt-on-error
-+ LATEXMKFLAG += -halt-on-error -lualatex
-\end{lstlisting}
-
-  \item \lstinline|make|を実行する
-\end{enumerate}
-
-これ以降は\lstinline|make|のみでLua\LaTeX 利用されますし、
-この状態でGitにpushするとJenkins上でもLua\LaTeX が利用されます。
-
-\section{記事を書く}
-
-記事を書いたら、\lstinline|make|コマンドでビルドできます。
+記事をコンパイルするため、まずは\lstinline|texfiles|ディレクトリの中で
+次のコマンドを実行します。この操作は一度だけ行えば、記事を書き換えたとしても
+再び行う必要はありません。
 
 \begin{lstlisting}
-git add *
-make
+$ docker-compose pull
+$ docker-compose up
 \end{lstlisting}
 
-これで\ovalbox{main.pdf}が生成されれば成功です。
-あとは\ovalbox{main.tex}を編集すれば記事が出来ます。
+そして、記事のGitリポジトリのルートで次のコマンドを実行します。
+
+\begin{lstlisting}
+$ docker-compose pull
+$ docker-compose up  
+\end{lstlisting}
 
 \section{Gitサーバにpushする}
 
-記事のキリの良いところで\lstinline|git push|するといいのですが、最初のpushの時には、
-origin\footnote{ここではWORDのGitサーバである\url{gitolite.word-ac.net}のことです}%
-に新しいブランチを登録する必要があります。それは以下のようにしましょう。
+WORDではかつて伝統あるGitoliteにより管理されていましたが、
+ディスク故障によってGitのデータを失ってからBitbucketへ移行しました。
+
+まず、WORDのGitbucketのチームである\url{https://bitbucket.org/word-coins}へ
+参加していない場合は、Bitbucketのアカウントを取得して
+管理者の誰かへ連絡してメンバーに加えてもらいましょう。
+
+Bitbukectにプッシュする場合は、自分の編集を行った適当なブランチを
+次のコマンドでプッシュします。
 
 \begin{lstlisting}[mathescape]
-git push origin personal/$username$/$article\_name$
+git push origin feature/my_branch
 \end{lstlisting}
 
-pushを成功させた場合には、ビルドの結果がslack\footnote{\url{https://word-ac.slack.com}}の\#jenkinsチャンネルに流れます。
-slackを見ていない場合は、\url{https://jenkins.word-ac.net/job/LaTeX/}および\url{https://gitiles.word-ac.net/}を見ると良いでしょう。
-
-\section{ヒラギノフォントを埋め込む}
-
-macOSを利用しているなど、手元のコンパイル環境でヒラギノフォントが利用可能な場合は、
-次の手順でヒラギノフォントを埋め込んだPDFファイルを作成できます。
-
-\subsection{p\LaTeX の場合}
-
-\begin{lstlisting}
-sudo cjk-gs-integrate --link-texmf --force
-sudo mktexlsr  
-sudo kanji-config-updmap-sys hiragino-elcapitan-pron
-\end{lstlisting}
-  
-この状態で\lstinline|make|することでヒラギノフォント埋め込みPDFが作成されます。
-
-\subsection{Lua\LaTeX の場合}
-
-\begin{description}
-  \item[macOS・Linux] \lstinline|make|のかわりに\lstinline|WORD_FONT=hiragino-pron make|を実行する
-
-  \item[Windows] \lstinline|make|の前に\lstinline|set WORD_FONT=hiragino-pron|を実行する
-\end{description}
+プッシュを成功させた場合には、ビルドの結果がSlack\footnote{\url{https://word-ac.slack.com}}の\texttt{\#latex}チャンネルに流れます。
 
 \section{トラブルシューティング}
-
-\subsection{偶数頁}
-
-編集作業をしていると、レイアウトの問題で偶数頁から開始していただくことがあります。
-
-\lstinline|\documentclass|のオプションに\ovalbox{evenstart}をつけることで簡単にできます。
-
-\begin{lstlisting}[language=TeX, mathescape]
-\documentclass[evenstart]{word}
-\end{lstlisting}
 
 \subsection{「文 編集部」の削除}
 
@@ -138,10 +78,10 @@ sudo kanji-config-updmap-sys hiragino-elcapitan-pron
 \authormark{}    
 \end{lstlisting}
 
-\section{鍵の登録}
+\subsection{\texttt{\textbackslash input}コマンド}
 
-Gitサーバに鍵を登録しないと、pushできません。もしそれが原因でつまっている場合には、誰か権限を持っていそうな人に頼んで登録してもらいましょう。2016年6月現在では、
-pi8027, yyu, ioriveur, shinkbr, osyoyu, chris, nymphiumが部員を登録できます。鍵が変わった場合も声をかけましょう。
+\lstinline|\input|コマンドを利用する場合、
+このフォルダからの相対パスではなくリポジトリルートからの相対パスを利用してください。
 
 \section{他の問題について}
 
