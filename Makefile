@@ -13,8 +13,9 @@ TARGET       = $(addsuffix .pdf, $(SRC))
 TEXFILES     = ./texfiles
 
 CLASS        = word
-TEXDEPS      = $(foreach deps, $(CLASS).cls, $(TEXFILES)/$(deps))
 
+TEXDEPS      = $(addsuffix .cls, $(TEXFILES)/$(CLASS))
+TEXDTX       = $(addsuffix .dtx, $(TEXFILES)/$(CLASS))
 TEXINS       = $(addsuffix .ins, $(TEXFILES)/$(CLASS))
 
 .PHONY: all continue clean
@@ -30,6 +31,9 @@ continue:
 
 $(CLASS).cls: $(TEXDEPS)
 	$(CP) -r $(foreach deps, $(TEXDEPS), $(deps)) ./
+
+$(TEXDEPS): $(TEXDTX) $(TEXINS)
+	LATEXMKFLAG="$(LATEXMKFLAG)" $(MAKE) $(CLASS).cls -C $(TEXFILES)
 
 clean:
 	$(RM) -f $(TEXDEPS)
