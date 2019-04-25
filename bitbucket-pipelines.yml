@@ -4,6 +4,8 @@ pipelines:
       - step:
           name: Build the book
           image: wordcoins/latex-build:latest
+          caches:
+            - fontcache
           script:
             - git submodule update --init
             - WORD_FONT=sourcehan-jp make
@@ -16,6 +18,8 @@ pipelines:
       - step:
           name: Build a single article
           image: wordcoins/latex-build:latest
+          caches:
+            - fontcache
           script:
             - git submodule update --init
             - cd articles/`basename $BITBUCKET_BRANCH`
@@ -30,6 +34,8 @@ pipelines:
       - step:
           name: Build the book
           image: wordcoins/latex-build:latest
+          caches:
+            - fontcache
           script:
             - git submodule update --init
             - WORD_FONT=sourcehan-jp make
@@ -38,3 +44,7 @@ pipelines:
             - ./scripts/notify_slack.sh
           artifacts:
             - main.pdf
+
+definitions:
+  caches:
+    fontcache: /root/.texlive2018/texmf-var
