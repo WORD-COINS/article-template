@@ -10,6 +10,7 @@
 *.out
 .omakedb*
 *.ps
+!articles/*/jisb5.ps
 main.pdf
 word.cls
 *.synctex.gz
