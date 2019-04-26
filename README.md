@@ -7,10 +7,7 @@ WORDの記事の雛形
 - [TeXLive](https://www.tug.org/texlive/)または[MacTeX](http://www.tug.org/mactex/)
 - [GNU Make](https://www.gnu.org/software/make)
 
-## コンパイル
 
-1. `git submodule update --init`
-2. `make`
 
 ## 編集の仕方
 
@@ -56,6 +53,38 @@ WORD編集部の人間ではない場合、著者の前に付く「文　編集�
 ```tex
 \authormark{}
 ```
+
+## コンパイル
+リポジトリをクローンしたら最初にsubmoduleをcloneしましょう。
+```
+$ git submodule update --init
+```
+
+### 全体のコンパイル
+リポジトリのルートディレクトリで`make`しましょう。
+
+### 各記事のコンパイル
+目次と裏表紙が必要ない場合は`articles/`以下の記事ディレクトリに`cd`して`make`しましょう。
+
+### Dockerによるコンパイル
+手元でのビルドに失敗したり、TeXLiveを入れたくなかったりする人はDockerイメージを使ってビルドすることもできます。
+```
+$ docker-compose up
+```
+
+### BitBucket Pipelinesによるコンパイル
+特定のブランチ名でBitBucketにpushするとPipelinesを使って記事をビルドすることができます。
+
+#### コンパイル対象
+* タグ: 全体の記事
+* `master`ブランチ: 全体の記事
+* `articles/*`ブランチ: ブランチ名末尾と同じディレクトリの記事
+
+例えば`my_article`というディレクトリで記事を書いた場合、
+`articles/my_article`というブランチ名でpushすることで自動的に記事がビルドされます。
+
+#### PDFのダウンロード
+ビルドに成功したらリポジトリのDownloadsページからPDFをダウンロードすることができます。
 
 ## 質問
 

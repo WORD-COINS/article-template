@@ -1,27 +1,53 @@
 pipelines:
-  default:
-    - step:
-        name: Build a Docker image and PDF then upload the image
-        image: atlassian/default-image:latest
-        services:
-          - docker
-        script:
-          - git submodule update --init
-          - curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` > docker-compose
-          - chmod +x docker-compose
-          - sudo mv docker-compose /usr/local/bin
-          - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
-          - docker-compose pull
-          - docker-compose build
-          - docker-compose up --exit-code-from article_build
-          - ./pipeline/deploy_image.sh
-        artifacts:
-          - main.pdf
-    - step:
-        name: Upload a PDF
-        deployment: production
-        image: python:3.5.1
-        script:
-          - ./pipeline/deploy_pdf.sh
-        services:
-          - docker
+  branches:
+    master:
+      - step:
+          name: Build the book
+          image: wordcoins/latex-build:latest
+          max-time: 30
+          caches:
+            - fontcache
+          script:
+            - git submodule update --init
+            - WORD_FONT=sourcehan-jp make
+            - curl -X POST "https://${BB_AUTH_STRING}@api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form "files=@main.pdf;filename=$BITBUCKET_BRANCH.pdf"
+          after-script:
+            - ./scripts/notify_slack.sh
+          artifacts:
+            - main.pdf
+    articles/*:
+      - step:
+          name: Build a single article
+          image: wordcoins/latex-build:latest
+          max-time: 10
+          caches:
+            - fontcache
+          script:
+            - git submodule update --init
+            - cd articles/`basename $BITBUCKET_BRANCH`
+            - WORD_FONT=sourcehan-jp make
+            - curl -X POST "https://${BB_AUTH_STRING}@api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form "files=@main.pdf;filename=`basename $BITBUCKET_BRANCH`.pdf"
+          after-script:
+            - ../../scripts/notify_slack.sh
+          artifacts:
+            - main.pdf
+  tags:
+    '*':
+      - step:
+          name: Build the book
+          image: wordcoins/latex-build:latest
+          max-time: 30
+          caches:
+            - fontcache
+          script:
+            - git submodule update --init
+            - WORD_FONT=sourcehan-jp make
+            - curl -X POST "https://${BB_AUTH_STRING}@api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form "files=@main.pdf;filename=$BITBUCKET_TAG.pdf"
+          after-script:
+            - ./scripts/notify_slack.sh
+          artifacts:
+            - main.pdf
+
+definitions:
+  caches:
+    fontcache: /root/.texlive2018/texmf-var
