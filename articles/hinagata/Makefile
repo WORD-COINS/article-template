@@ -28,8 +28,8 @@ all: $(SRC).pdf
 	$(MAKE) $(TEXDEPS)
 	$(LATEXMK) $(LATEXMKFLAG) $<
 
-continue:
-	LATEXMKFLAG +=-pvc $(MAKE)
+continue: LATEXMKFLAG +=-pvc
+continue: all
 
 $(CLASS).cls: $(TEXDEPS)
 	$(CP) -r $(foreach deps, $(TEXDEPS), $(deps)) ./
