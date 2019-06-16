@@ -120,6 +120,37 @@ Author={Taro Jhouho},
 }
 ```
 
+#### 既定以外のフォントを用いる場合
+docker側でフォントインストールとシステムへの反映処理が書かれているものとして、
+WORDクラス元のbxjsクラスで`luatexja-fontspec`パッケージを読みこんでいるので、
+`article-template/main.tex` のプリアンブルで以下のようにして追加する。
+他の記事を壊さないよう、グルーピング（`{}`）して使用すること。
+
+
+`article-template/main.tex`
+
+```tex
+
+\newfontfamily{\myfont}{Very Good Font}
+
+\begin{docment}
+```
+
+`article-template/articles/my_article/main.tex`
+
+```tex
+\begin{document}
+...
+
+普通の文章。{\myfont ここからウルトラスーパー良いフォントで表示}
+
+
+
+
+
+```
+
+
 #### 別にpdfをビルドしている場合
 
 すでに別ビルドしたpdfがある場合、
