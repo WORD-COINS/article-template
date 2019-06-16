@@ -139,6 +139,27 @@ git push origin feature/my_branch
 \lstinline|\input|コマンドを利用する場合、
 このフォルダからの相対パスではなくリポジトリルートからの相対パスを利用してください。
 
+\subsection{参考文献}
+文章中で\lstinline$\cite{hoge}$を使い、article-template直下のmain.bibを例えば
+以下\ref{bibtex}のようにBiB\TeX 形式で編集する。
+
+\begin{figure}
+\begin{lstlisting}[language=TeX, mathescape,]
+@article{hoge, %citeで引数にする短縮名
+Title={hogehoge},
+Author={hidaruma},
+}
+\end{lstlisting}
+\label{bibtex}
+\caption{main.bib}
+\end{figure}
+参考文献を出力したい箇所で以下のように書く。
+biblatexパッケージを用いている場合の挙動なので、詳細はそちらを参照するとよい。
+\begin{lstlisting}[language=TeX, mathescape]
+\bibbysection[heading=subbibnumbered]
+\end{lstlisting}
+
+
 \subsection{CIが通らない}
 
 BitbucketのCI環境ではDocker\footnote{\url{https://www.docker.com/}}を利用して
@@ -161,5 +182,9 @@ $ docker-compose up
 直接詳しい人にSNSで聞く場合、@\_yyu\_\footnote{\url{https://twitter.com/_yyu_}}へ投げると早い。
 Lua\LaTeX に関しては@Nymphium\footnote{\url{https://twitter.com/Nymphium}}か@azuma962\footnote{\url{https://twitter.com/azuma962}}へ。
 クラスファイルの全体的な質問は@hid\_alma1026\footnote{\url{https://twitter.com/hid_alma1026}}へ。
+
+% 参考文献の出力
+% 文書中で参考文献を用いたときアンコメント
+%\bibbysection[heading=subbibnumbered]
 
 \end{document}

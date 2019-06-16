@@ -5,10 +5,30 @@
 \usepackage[svgnames,luatex]{xcolor}
 \usepackage{listings}
 \usepackage{fancybox}
-\usepackage{url}
-\usepackage[luatex,%
+\usepackage[%
+luatex,%
 hypertexnames=false%
 ]{hyperref}
+
+% 参考文献
+\usepackage[
+backend=bibtex,%
+bibstyle=numeric,%
+sortcites=true,%
+]{biblatex}
+\addbibresource{main.bib}
+\defbibheading{subbibnumbered}{%
+	\section{参考文献}%
+}
+
+\usepackage{tikz}
+
+\usepackage{pdfpages}
+
+% CJKフォントを使いたい場合、dockerにNotoSerifCJKをインストールするよう設定した後
+% 以下をコメントアウト
+%\newfontfamily{\cjkfont}{Noto Serif CJK}
+
 
 \begin{document}
 
@@ -24,10 +44,9 @@ hypertexnames=false%
 \newpage
 
 \mainmatter
-
+\pagestyle{fancy}
 % 記事（サンプル）
 \article{./articles/hinagata}
-
 % 裏表紙
 \article{./articles/back_cover}
 
