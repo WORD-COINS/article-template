@@ -29,15 +29,17 @@ sortcites=true,%
 % 以下をコメントアウト
 %\newfontfamily{\cjkfont}{Noto Serif CJK}
 
-
 \begin{document}
 
 % Listingsの番号再定義です。
 % この命令はdocumentがはじまってからでないとダメなのでここにあります。
 \renewcommand{\thelstlisting}{\arabic{lstlisting}}
-
-% 目次（チャプターレベルしか目次に表示しない）
+% 表紙
 \frontmatter
+
+\cover{./articles/cover}
+\newpage
+% 目次（チャプターレベルしか目次に表示しない）
 \setcounter{tocdepth}{0}
 \thispagestyle{empty}
 \tableofcontents
@@ -47,6 +49,10 @@ sortcites=true,%
 \pagestyle{fancy}
 % 記事（サンプル）
 \article{./articles/hinagata}
+% 編集後記用プレースホルダ
+\phantomsection
+\addcontentsline{toc}{chapter}{編集後記}
+\newpage
 % 裏表紙
 \article{./articles/back_cover}
 

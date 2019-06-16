@@ -1,0 +1,26 @@
+% ---
+% 表紙生成用texファイル
+% 解像度は印刷用は300dpi以上、電子用は96dpi程度にするか全体に圧縮をかける。
+% JISB5サイズで画像を用意するのが望ましい。
+% ---
+\makeatletter
+\def\input@path{{../../}}
+\makeatother
+ 
+\documentclass[../../main]{subfiles}
+  
+\begin{document}
+\thispagestyle{empty}
+\enlargethispage{\paperwidth}
+\vspace*{-\headheight}
+\vspace*{-1truein}
+\vspace*{-\topmargin}
+\vspace*{-\topskip}
+\vspace*{-\topsep}
+\hspace*{-1truein}\hspace{-\oddsidemargin}\noindent%
+%以下をコメントアウトし、cover.jpgを置き換えるなどして使用してください。
+% jpg,png,pdfなど形式は大体対応しています。
+
+%\includegraphics[width=\paperwidth, height=\paperheight]{cover.jpg}
+
+\end{document}
