@@ -28,7 +28,7 @@ pipelines:
             - WORD_FONT=sourcehan-jp make
             - curl -X POST "https://${BB_AUTH_STRING}@api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form "files=@main.pdf;filename=`basename $BITBUCKET_BRANCH`.pdf"
           after-script:
-            - ../../scripts/notify_slack.sh
+            - ./scripts/notify_slack.sh
           artifacts:
             - main.pdf
   tags:
