@@ -1,0 +1,13 @@
+# default
+* text=auto
+
+# images
+*.pdf -text
+*.png -text
+*.gif -text
+*.jpg -text
+*.jpeg -text
+
+# fonts
+*.ttf -text
+*.otf -text
