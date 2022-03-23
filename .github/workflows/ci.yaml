@@ -37,7 +37,7 @@ jobs:
       - name: check branch name
         shell: bash
         run: |
-          if [[ ${{ steps.extract_branch.outputs.branch }} =~ ^articles/\.*$ ]]; then
+          if [[ ${{ steps.extract_branch.outputs.branch }} =~ ^articles/.*$ ]]; then
           echo "::set-output name=match::true"
           fi
         id: branch_regex
