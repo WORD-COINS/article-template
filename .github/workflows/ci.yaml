@@ -34,8 +34,15 @@ jobs:
           WORD_FONT=sourcehan-jp make
           aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME.pdf
 
+      - name: check branch name
+        id: branch_regex
+	run: |
+	  if [[ ${{ steps.extract_branch.outputs.branch }} =~ ^articles/\.*$ ]]; then
+	      echo "::set-output name=match::true"
+	  fi
+
       - name: build articles branch
-        if: steps.extract_branch.outputs.branch == "articles/**"
+        if: steps.branch_regex.outputs.match == 'true'
         run: |
           ARTICLE_NAME=$(echo '${{ steps.extract_branch.outputs.branch }}' | awk -F '/' '{print $2}')
           cd ${{ steps.extract_branch.outputs.branch }}
