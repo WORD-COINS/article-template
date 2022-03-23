@@ -41,3 +41,4 @@ jobs:
           cd ${{ steps.extract_branch.outputs.branch }}
           WORD_FONT=sourcehan-jp make
           aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME-$ARTICLE_NAME.pdf
+
