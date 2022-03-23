@@ -36,10 +36,10 @@ jobs:
 
       - name: check branch name
         id: branch_regex
-	run: |
-	  if [[ ${{ steps.extract_branch.outputs.branch }} =~ ^articles/\.*$ ]]; then
-	      echo "::set-output name=match::true"
-	  fi
+        run: |
+          if [[ ${{ steps.extract_branch.outputs.branch }} =~ ^articles/\.*$ ]]; then
+          echo "::set-output name=match::true"
+          fi
 
       - name: build articles branch
         if: steps.branch_regex.outputs.match == 'true'
