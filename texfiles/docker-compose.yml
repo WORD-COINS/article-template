@@ -1,0 +1,11 @@
+version: '3.4'
+services:
+  texfiles_build:
+    image: wordcoins/texfiles:latest
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+      cache_from:
+        - wordcoins/texfiles:latest
+    volumes:
+      - .:/workdir

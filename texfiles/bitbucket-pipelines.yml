@@ -1,0 +1,26 @@
+pipelines:
+  default:
+    - step:
+        name: Build a Docker image and PDF then upload the image
+        image: atlassian/default-image:latest
+        services:
+          - docker
+        script:
+          - curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` > docker-compose
+          - chmod +x docker-compose
+          - sudo mv docker-compose /usr/local/bin
+          - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
+          - docker-compose pull
+          - docker-compose build
+          - docker-compose up --exit-code-from texfiles_build
+          - ./pipeline/deploy_image.sh
+        artifacts:
+          - word.pdf
+    - step:
+        name: Upload a PDF
+        deployment: production
+        image: python:3.7.7-slim
+        script:
+          - ./pipeline/deploy_pdf.sh
+        services:
+          - docker

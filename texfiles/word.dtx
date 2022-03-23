@@ -1,0 +1,433 @@
+% \iffalse-meta comment
+%% File: word.dtx
+%
+% \setcounter{StandardModuleDepth}{1}
+% \StopEventually{}
+% \fi
+%\iffalse
+%\CheckSum{0}
+%\changes{v1.0}{2017/10/28}{First Release}
+%\fi
+%
+%\iffalse
+%<*driver>
+\ProvidesFile{word.dtx}
+%</driver>
+% 
+%    \begin{macrocode}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{word}[2017/10/28 WORD Standard LaTeX class]
+%    \end{macrocode}
+%
+% \fi
+%\iffalse
+%<*driver>
+\documentclass{bxjsarticle}
+\usepackage{doc}
+\usepackage{ifluatex}
+\ifluatex
+\usepackage[ipaex]{luatexja-preset}
+\fi
+\GetFileInfo{word.dtx}
+\begin{document}
+ \DocInput{\filename}
+\end{document}
+%</driver>
+%\fi
+%
+%\def\fileversion{0.1}
+%\def\filedate{2017/10/23}
+%\title{WORD Standard Class \fileversion}
+%\author{WORD \LaTeX{} Team}
+%\date{\filedate}
+%\maketitle
+%\tableofcontents
+% \section{オプションスイッチ}
+% 後程使用する幾つかのスイッチを定義しています。
+% \begin{macro}{\if@evenstart}
+% 偶数始まりかどうかのスイッチです。主にヘッダの位置に関わります。
+%    \begin{macrocode}
+\newif\if@evenstart \@evenstartfalse
+%    \end{macrocode}
+% \end{macro}
+
+%% \begin{macro}{\if@noheader}
+% ヘッダ出力をするかどうかのスイッチです。\TeX ではなくPDFを取りこんで使う場合などに用いてください。
+%    \begin{macrocode}
+\newif\if@noheader \@noheaderfalse
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\if@nopagenumber}
+% ページ番号の出力スイッチです。オプションを宣言するとページ番号を出力しなくなります。
+%    \begin{macrocode}
+\newif\if@nopagenumber \@nopagenumberfalse
+%    \end{macrocode}
+% \end{macro}
+
+%\section{オプションの宣言}
+%    \begin{macrocode}
+\DeclareOption{evenstart}{\@evenstarttrue}
+%    \end{macrocode}
+
+%    \begin{macrocode}
+\DeclareOption{noheader}{\@noheadertrue}
+%    \end{macrocode}
+
+%    \begin{macrocode}
+\DeclareOption{nopagenumber}{\@nopagenumbertrue}
+%    \end{macrocode}
+
+%    \begin{macrocode}
+\DeclareOption{draft}{%
+	\setlength\overfullrule{5pt}
+	\@drafttrue
+	\@pagenumbertrue
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+\ProcessOptions\relax
+%    \end{macrocode}
+
+%
+%\section{クラスのロード}
+% WORDでは環境変数によって変数を指定しています。環境変数\texttt{WORD\_FONT}によって、
+% 埋め込むフォントを決定します。この環境変数が指定されていない場合、フォントは\texttt{auto}となります。
+%    \begin{macrocode}
+\RequirePackage{ifluatex}
+\RequirePackage{ifxetex}
+\ifluatex
+  \newcommand{\WORDFONT}{%
+    \directlua{
+      WORD_FONT = os.getenv("WORD_FONT")
+
+      if WORD_FONT then
+        tex.print(WORD_FONT)
+      else
+        tex.print("auto")
+      end
+    }
+  }
+\fi
+\ifluatex
+\LoadClass[autodetect-engine, dvipdfmx-if-dvi, jbase=13Q, b5j, openany, fancyhdr=false, ja=standard, jafont=\WORDFONT]{bxjsbook}
+\else
+\ifxetex
+\newcommand{\mathmc}{\mcfamily}
+\newcommand{\mathgt}{\gtfamily}
+\LoadClass[autodetect-engine, dvipdfmx-if-dvi, jbase=13Q, b5j, openany, fancyhdr=false, ja=standard, jafont=auto]{bxjsbook}
+\else
+\LoadClass[autodetect-engine, dvipdfmx-if-dvi, jbase=13Q, b5j, openany, fancyhdr=false, ja=standard]{bxjsbook}
+\fi
+\fi
+%    \end{macrocode}
+%\section{set spacing}
+% WORDでは欧文フォントが8.5ptで48字33行を設定している。設定自体に必然性は無いが、一太郎での設定との互換のために
+% 現在の設定になっている。左右は一太郎では24mmだが、1行48字を実現するため下記のようになっている。
+%
+% 2019/10/08 48号から文字サイズを13級、左右を25mmにして1行38文字に設定した。
+% また、字詰め数の減少に伴い行間も広く感じるようになったため狭くした。
+%    \begin{macrocode}
+\geometry{top=15truemm, bottom=15truemm, right=25truemm, left=25truemm, includehead, includefoot}
+\renewcommand{\baselinestretch}{1.1}
+%    \end{macrocode}
+% \begin{macro}{\@twosidetrue}
+% WORDでは奇数ページと偶数ページで出力が異なるため、twosideを強制的にtrueにしています。fancyhdrの設定で使われます。
+%
+%    \begin{macrocode}
+\@twosidetrue
+%    \end{macrocode}
+%\end{macro}
+
+% \section{パッケージのロード}
+%    \begin{macrocode}
+\RequirePackage{fancyhdr}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{newtxtext}
+\RequirePackage{newtxmath}
+\RequirePackage{ifluatex}
+\RequirePackage{ifptex}
+\RequirePackage{tocdata}
+\RequirePackage{titletoc}
+\RequirePackage{subfiles}
+%    \end{macrocode}
+% \section{スタイル}
+% \section{fontsizeの変更}
+%    \begin{macrocode}
+\renewcommand{\scriptsize}{\@setfontsize\scriptsize\@vpt\@viiipt}
+\renewcommand{\tiny}{\@setfontsize\tiny{4.25}\@vipt}
+\renewcommand{\large}{\@setfontsize\large{11}{22}}
+\renewcommand{\Large}{\@setfontsize\Large{12}{25}}
+\renewcommand{\LARGE}{\@setfontsize\LARGE{14}{27}}
+\renewcommand{\huge}{\@setfontsize\huge{17}{28}}
+\renewcommand{\Huge}{\@setfontsize\Huge\@xxpt{33}}
+\renewcommand{\HUGE}{\@setfontsize\HUGE{30}{40}}
+%    \end{macrocode}
+
+% \subsection{ヘッダの設定}
+% ヘッダは基本的に記事名を出力します。変更したい場合、
+% \texttt{\textbackslash articleheader}コマンドを用いてください。
+% markrightやmarkleftを用いているのは記事タイトルのタイミングでヘッダ変更を行うため
+% です。記事タイトルにchapterを用いるようになった場合、この辺りも調整が必要です。
+%    \begin{macrocode}
+\setlength{\fullwidth}{\textwidth}
+
+\fancyhead{}
+\fancyfoot{}
+
+\if@noheader
+  \renewcommand{\headrulewidth}{0.0pt}
+\else
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\sectionmark}[1]{}
+  \fancyhead[RO]{\leftmark}
+  \fancyhead[LE]{\leftmark}
+\fi
+%    \end{macrocode}
+
+% \subsection{フッタの設定}
+%    \begin{macrocode}
+\if@nopagenumber
+\else
+  \fancyfoot[LE]{\pagenumfont \hspace*{-0.50truein}\thepage}
+  \fancyfoot[RO]{\pagenumfont \thepage\hspace*{-0.50truein}}
+\fi
+%    \end{macrocode}
+
+% \subsection{ページ番号のフォント}
+% ページ番号のフォントを設定しています。
+% \begin{macrocode}
+\ifptex
+  \newcommand*{\pagenumfont}{\fontfamily{EB Garamond}\selectfont}
+\else
+  \newfontfamily{\pagenumfont}{EB Garamond}[Numbers={OldStyle, Proportional}]
+\fi
+% \end{macrocode}
+
+% \subsection{目次の制御}
+%    \begin{macrocode}
+\titlecontents{chapter}% <section-type>
+  [0pt]% <left>
+  {}% <above-code>
+  {\headfont}% <numbered-entry-format>
+  {}% <numberless-entry-format>
+  {\dotfill%
+  \TD@usetocdata% <articleauthor if exist>
+  \contentspage}% <filler-page-format>
+%    \end{macrocode}
+
+% \subsection{subtitleの定義}
+%    \begin{macrocode}
+\def\subtitle#1{\gdef\@subtitle{#1}}
+\let\@subtitle\@empty
+%    \end{macrocode}
+
+% \subsection{articleheaderの定義}
+% subtitle互換のarticleheaderを定義しました。
+%    \begin{macrocode}
+\def\articleheader#1{\gdef\@articleheader{#1}%
+\markboth{\@articleheader}{\@articleheader}}
+\let\@articleheader\@empty
+%    \end{macrocode}
+
+% \section{基本フォントの変更}
+% フォントの英数字部分をTimesフォントに変更しています。
+%    \begin{macrocode}
+\renewcommand{\rmdefault}{ptm}
+\renewcommand{\sfdefault}{ptm}
+%    \end{macrocode}
+
+% \section{\@authormarkの定義}
+% 著者名の横に付与する情報です。表示したくない場合、プリアンブルでauthormarkを上書きしてください。
+%    \begin{macrocode}
+\def\authormark#1{\gdef\@authormark{#1}}
+\newcommand{\@authormark}{文\hskip\Cwd 編集部}
+%    \end{macrocode}
+
+% \section{Chapterの設定}
+% 
+%    \begin{macrocode}
+\renewcommand{\thechapter}{}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\theequation}{\arabic{equation}}
+\def\@makechapterhead#1{
+  \thispagestyle{fancy}
+  {%
+    \parindent\z@
+    \raggedright
+    \reset@font\huge\gtfamily\bfseries
+    \leavevmode
+    \begin{center}
+      \setlength\baselineskip{.7\baselineskip} #1%
+    \end{center}
+  }
+  \par \nobreak \vskip\Cvs
+  \begin{flushright}
+    {\reset@font\large\@authormark\hskip\Cwd\@author}%
+  \end{flushright}
+  \vskip.5\Cvs
+  \reset@font\normalsize
+  \@afterheading
+}
+%    \end{macrocode}
+% \section{section、subsection、subsubsectionのゴシック体化}
+%    \begin{macrocode}
+\renewcommand{\section}{\@startsection{section}{1}{\z@}%
+ {\z@}%
+ {\z@}%
+ {\reset@font\LARGE\gtfamily\bfseries}}
+ 
+\renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
+ {\z@}%
+ {\z@}%
+ {\reset@font\Large\gtfamily\bfseries}}
+ 
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{\z@}%
+   {\z@}%
+   {\z@}%
+   {\reset@font\large\gtfamily\bfseries}}
+%    \end{macrocode}
+% \section{記事タイトル}
+% chapterではない記事タイトル用のコマンドに\texttt{\textbackslash articletitle}
+% と\texttt{\textbackslash articleauthor}を用意しました。主に記事執筆者が文書グローバルな
+% \texttt{\textbackslash author}を使ってしまうことを防ぐためです。
+% \texttt{\textbackslash maketitle}と同様に\texttt{\textbackslash makearticletitle}を使ってしまうことを防ぐためです。
+% を用いて記事タイトルを表示させます。完成したページのpdfを取りこむがtocへの追加も行いたい場合
+% \texttt{\textbackslash makenoarticletitle}を用いてください。
+%    \begin{macrocode}
+\def\articletitle#1{\gdef\@articletitle{#1}}
+\let\@articletitle\@empty
+\def\articleauthor#1{\gdef\@articleauthor{#1}}
+\let\@articleauthor\@empty
+
+\newcommand{\makearticletitle}{%
+\vspace*{-2mm}
+  \begin{center}
+  {\huge\gtfamily\bfseries\@articletitle}
+  \end{center}
+  \par \nobreak \vskip\Cvs
+  \begin{flushright}
+  {\large\@authormark\hskip\Cwd\@articleauthor}
+  \end{flushright}
+  \vskip.5\Cvs
+  \tocdata{toc}{\@articleauthor}
+  \addcontentsline{toc}{chapter}{\@articletitle}
+  \articleheader{\@articletitle}
+  \let\@articleauthor\relax
+  \let\@articletitle\relax
+  \let\@thanks\relax
+ }
+
+\newcommand{\makenoarticletitle}{%
+  \expandafter\ifx\csname \phantomsection\endcsname%
+  \phantomsection
+  \fi
+  \addcontentsline{toc}{chapter}{\@articletitle}
+  \tocdata{toc}{\@articleauthor}
+  \let\@articleauthor\relax
+  \let\@articletitle\relax
+  \let\@thanks\relax
+ }
+%    \end{macrocode}
+%
+% \section{for wordlogo.sty}
+%    \begin{macrocode}
+\ifxetex
+\xeCJKDeclareCharClass{CJK}{`■}
+\fi
+%    \end{macrocode}
+%
+% \section{脚注の位置}
+% \begin{macrocode}
+\renewcommand\@makefntext[1]{%
+\parindent 1em
+  \baselineskip = 0.75\baselineskip
+  \noindent\hbox to 1em{\hss\@makefnmark}
+#1}
+% \end{macrocode}
+%
+% \section{脚注のインデント}
+% 脚注の長さが複数行に渡るとき、2行目以降のインデント位置を1行目と同じになるよう調整しました。
+% ただし、改段落には対応していません。改段落が必要な場合、脚注自体を異なるものにすべきです。
+% \begin{macrocode}
+\long\def\@makefntext#1{\parindent 1em\noindent 
+\@hangfrom{\hbox to 1.8em{\hss$^{\@thefnmark}$}}#1}
+% \end{macrocode}
+
+% \section{脚注の線}
+% 脚注部に引く線をテキストの幅に変更しています。
+%    \begin{macrocode}
+\renewcommand{\footnoterule}{%
+\kern-3\p@
+\hrule width\textwidth
+\kern 2.6\p@}
+%    \end{macrocode}
+
+% \section{本文スタイル}
+% fancyhdrを用いて設定したため、基本的なページスタイルをfancyにセットします。
+%    \begin{macrocode}
+\pagestyle{fancy}
+%    \end{macrocode}
+
+% \section{mainmatterの改ページを抑制}
+% デフォルトでは目次などと本文の間に改ページがはいりますが、
+% このようにしてその挙動を抑制します。
+%    \begin{macrocode}
+\renewcommand{\mainmatter}{%
+  \clearpage
+  \@mainmattertrue
+  \pagenumbering{arabic}}
+%    \end{macrocode}
+
+% \section{目次}
+% 目次をチャプターではなくセクションへ変更します。
+%    \begin{macrocode}
+\renewcommand{\tableofcontents}{%
+  \settowidth\jsc@tocl@width{\headfont\prechaptername\postchaptername}%
+  \settowidth\@tempdima{\headfont\appendixname}%
+  \ifdim\jsc@tocl@width<\@tempdima \setlength\jsc@tocl@width{\@tempdima}\fi
+  \ifdim\jsc@tocl@width<2\jsZw \divide\jsc@tocl@width by 2 \advance\jsc@tocl@width 1\jsZw\fi
+  \if@twocolumn
+    \@restonecoltrue\onecolumn
+  \else
+    \@restonecolfalse
+  \fi
+  \section*{\contentsname}%
+  \@mkboth{\contentsname}{}%
+  \@starttoc{toc}%
+  \if@restonecol\twocolumn\fi
+}
+%    \end{macrocode}
+
+% \section{記事のインポート}
+% 記事のインポートには\texttt{\textbackslash article}コマンドを利用します。
+% 引数には\texttt{./article/hinagata}といった記事のディレクトリを与えます。
+% \texttt{\textbackslash article}コマンドによるインポート時、新しい記事になるためsection以下のカウンタをリセットします。
+% \texttt{\textbackslash chapter}コマンドでの操作と重複しますが、基本的には記事タイトルには
+% \texttt{\textbackslash articletitle}を用いるためです。
+% 表紙ディレクトリ専用命令\texttt{\textbackslash cover}を用意しました。
+%    \begin{macrocode}
+\newcommand{\article}[1]{%
+  \setcounter{section}{0}
+  \setcounter{subsection}{0}
+  \setcounter{subsubsection}{0}
+  \setcounter{footnote}{0}
+  \setcounter{table}{0}
+  \setcounter{figure}{0}
+  \setcounter{lstlisting}{0}
+  \articletitle{}
+  \articleauthor{}
+  \subfile{#1/main.tex}
+  \newpage
+}
+
+\newcommand{\cover}[1]{%
+  \subfile{#1/main.tex}
+  \newpage
+}
+
+%    \end{macrocode}
+
+% \Finale
+\endinput
