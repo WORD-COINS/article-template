@@ -35,11 +35,12 @@ jobs:
           aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME.pdf
 
       - name: check branch name
-        id: branch_regex
+        shell: bash
         run: |
           if [[ ${{ steps.extract_branch.outputs.branch }} =~ ^articles/\.*$ ]]; then
           echo "::set-output name=match::true"
           fi
+        id: branch_regex
 
       - name: build articles branch
         if: steps.branch_regex.outputs.match == 'true'
