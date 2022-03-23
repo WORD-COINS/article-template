@@ -29,7 +29,7 @@ jobs:
         id: extract_branch
 
       - name: build master branch
-      	if: steps.extract_branch.outputs.branch == 'master'
+        if: steps.extract_branch.outputs.branch == 'master'
         run: |
           WORD_FONT=sourcehan-jp make
           aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME.pdf
