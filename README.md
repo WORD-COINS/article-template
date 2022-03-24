@@ -1,10 +1,10 @@
 WORDの記事の雛形
 ===================
 
-+ subfilesパッケージにより、texファイル入稿の形態へと変更
- - usepackageは`article-template` 直下の `main.tex` を編集する
-+ デフォルトの処理系をLuaLaTeXへと変更
-+ 記事タイトル周辺のコマンドの変更
+- subfilesパッケージにより、texファイル入稿の形態へと変更
+- usepackageは`article-template` 直下の `main.tex` を編集する
+- デフォルトの処理系をLuaLaTeXへと変更
+- 記事タイトル周辺のコマンドの変更
 
 ビルド時にぶっこわれが発生する場合、
 pLaTeX専用パッケージを利用しようとしていないかを疑ってみましょう。
@@ -12,20 +12,30 @@ pLaTeX専用パッケージを利用しようとしていないかを疑って�
 全体ビルド時にぶっこわれが発生する場合、前に置いてある記事で変更された
 コマンドがないかなどを確認しましょう。
 
-
 ## 必要なもの
 
 - [Git](https://git-scm.com/)
 - [TeXLive](https://www.tug.org/texlive/)または[MacTeX](http://www.tug.org/mactex/)
 - [GNU Make](https://www.gnu.org/software/make)
 
-
-
 ## 編集の仕方
+
+### 0. ブランチを切る
+
+記事を入れるディレクトリ名に合わせてGitのブランチを切ります。
+記事のディレクトリを`my_article`としたら、次のように切ってブランチを移動しましょう。
+
+```
+git branch articles/my_article
+git switch articles/my_article
+```
+
+注意する点として、 article **s** である点です。
+article だとCIが走らないので気を付けてください。
 
 ### 1. 記事のディレクトリを作る
 
-まず`articles`フォルダの`hinagata`をコピーして、任意の名前をつけます。
+`articles`フォルダの`hinagata`をコピーして、任意の名前をつけます。
 このときの名前はなんでも構いませんが日本語を使うとややこしくなるのでやめましょう。
 このときのディレクトリ名をここでは`my_article`としたとして話をすすめます。
 
@@ -141,11 +151,6 @@ WORDクラス元のbxjsクラスで`luatexja-fontspec`パッケージを読み�
 ...
 
 普通の文章。{\myfont ここからウルトラスーパー良いフォントで表示}
-
-
-
-
-
 ```
 
 
@@ -163,10 +168,6 @@ wordクラスを使う場合、`documentclass`のオプションに`noheader`と
 
 
 ## コンパイル
-リポジトリをクローンしたら最初にsubmoduleをcloneしましょう。
-```
-$ git submodule update --init
-```
 
 ### 全体のコンパイル
 リポジトリのルートディレクトリで`make`しましょう。
@@ -180,8 +181,8 @@ $ git submodule update --init
 $ docker-compose up
 ```
 
-### BitBucket Pipelinesによるコンパイル
-特定のブランチ名でBitBucketにpushするとPipelinesを使って記事をビルドすることができます。
+### GitHub Actionsによるコンパイル
+特定のブランチ名でBitBucketにpushするとGitHub Actionsを使って記事をビルドすることができます。
 
 #### コンパイル対象
 * タグ: 全体の記事
@@ -192,14 +193,15 @@ $ docker-compose up
 `articles/my_article`というブランチ名でpushすることで自動的に記事がビルドされます。
 
 #### PDFのダウンロード
-ビルドに成功したらリポジトリのDownloadsページからPDFをダウンロードすることができます。
+ビルドに成功したら編集部内のストレージからPDFをダウンロードすることができます。
+詳細は編集部のえらい人に聞いてください。
 
 ## 質問
 [@hid\_alma1026](https://twitter.com/hid_alma1026)か
 [@\_yyu\_](https://twitter.com/_yyu_)へ投げると早い。
 LuaLaTeXに関しては[@Nymphium](https://twitter.com/Nymphium)か[@azuma962](https://twitter.com/azuma962)へ。
 
-
+GitHub Actionsや成果物のpush先に関しては [@totsugeki\_tai](https://twitter.com/totsugeki_tai) に聞くとよい。
 
 ## ライセンス
 
