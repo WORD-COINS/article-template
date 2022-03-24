@@ -18,6 +18,7 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.MINIO_ACCESS_KEY }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.MINIO_SECRET_KEY }}
+      AWS_EC2_METADATA_DISABLED: true
       REPO_NAME: ${{ github.event.repository.name }}
     steps:
       - name: checkout
