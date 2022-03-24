@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   article_build:
-    image: wordcoins/latex-build:latest
-    command: "/bin/sh -c 'WORD_FONT=sourcehan-jp make'"
+    image: ghcr.io/word-coins/latex-build:latest
+    command: "/bin/sh -c 'fc-cache && WORD_FONT=sourcehan-jp make'"
     volumes:
       - .:/workdir
