@@ -14,7 +14,7 @@ jobs:
   build-article:
     runs-on: ubuntu-20.04
     container:
-      image: ghcr.io/word-coins/latex-build:latest
+      image: ghcr.io/word-coins/latex-build:add-awscli
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.MINIO_ACCESS_KEY }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.MINIO_SECRET_KEY }}
