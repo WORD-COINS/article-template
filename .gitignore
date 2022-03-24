@@ -15,7 +15,7 @@ main.pdf
 word.cls
 main.run.xml
 main-blx.bib
-main.bbl
+!main.bbl
 *.synctex.gz
 *.fdb_latexmk
 articles/*/word.cls
