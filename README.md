@@ -1,8 +1,6 @@
 WORDの記事の雛形
 ===================
 
-## Notable Changes(from old class)
-
 + subfilesパッケージにより、texファイル入稿の形態へと変更
  - usepackageは`article-template` 直下の `main.tex` を編集する
 + デフォルトの処理系をLuaLaTeXへと変更
