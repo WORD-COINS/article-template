@@ -8,6 +8,7 @@
 *.toc
 *.omc
 *.out
+*.blg
 .omakedb*
 *.ps
 !articles/*/jisb5.ps
