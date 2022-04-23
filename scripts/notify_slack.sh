@@ -5,22 +5,18 @@
 
 set -e
 
-if [ $BITBUCKET_EXIT_CODE -eq 0 ]; then
-  result="SUCCESS"
-else
-  result="FAILURE"
-fi
-
-REPO_NAME="${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}"
-REPO_URL="https://bitbucket.org/${REPO_NAME}"
-PDF_URL="${REPO_URL}/downloads/`basename ${BITBUCKET_BRANCH}`.pdf"
-PIPELINE_URL="${REPO_URL}/addon/pipelines/home#!/results/${BITBUCKET_BUILD_NUMBER}"
-COMMIT_URL="${REPO_URL}/src/${BITBUCKET_COMMIT}"
+GITHUB_HOST_URL="https://github.com"
+REPO_URL="${GITHUB_HOST_URL}/${REPO_NAME}"
+BUILD_URL="${GITHUB_HOST_URL}/${REPO_NAME}/actions/runs/${RUN_ID}"
+COMMIT_URL="${REPO_URL}/tree/${GITHUB_SHA}"
+GIT_BRANCH="${GITHUB_REF##*/}"
+# TODO: PDF_URL を PDF への直リンにしたい
+# PDF_URL=""
 
 fields=`cat <<EOS
 {
   "title": "Status",
-  "value": "${result}",
+  "value": "${status}",
   "short": "true"
 },
 {
@@ -30,31 +26,32 @@ fields=`cat <<EOS
 },
 {
   "title": "Branch",
-  "value": "${BITBUCKET_BRANCH}",
+  "value": "${GIT_BRANCH}",
   "short": "true"
 },
 {
   "title": "Revision",
-  "value": "<${COMMIT_URL}|${BITBUCKET_COMMIT}>",
+  "value": "<${COMMIT_URL}|${GITHUB_SHA}>",
   "short": "true"
 },
 {
   "title": "Compile Log",
-  "value": "${PIPELINE_URL}",
+  "value": "${BUILD_URL}",
   "short": "true"
 }
 EOS
 `
 
-case "${result}" in
-  "SUCCESS")
+case "${status}" in
+  "success" | "skipped")
     color="good"
-    fields="${fields},
-    {
-      \"title\": \"PDF\",
-      \"value\": \"${PDF_URL}\",
-      \"short\": \"true\"
-    }"
+    # TODO: PDF_URL を PDF への直リンにしたい
+    # fields="${fields},
+    # {
+    #   \"title\": \"PDF\",
+    #   \"value\": \"${PDF_URL}\",
+    #   \"short\": \"true\"
+    # }"
     ;;
   *) color="danger" ;;
 esac
@@ -63,9 +60,9 @@ payload=`cat <<EOS
 {
   "attachments": [
     {
-      "fallback": "${REPO_NAME} Build #${BITBUCKET_BUILD_NUMBER}",
-      "title": "${REPO_NAME} Build #${BITBUCKET_BUILD_NUMBER}",
-      "title_link": "${PIPELINE_URL}",
+      "fallback": "${REPO_NAME} Build #${RUN_ID}",
+      "title": "${REPO_NAME} Build #${RUN_ID}",
+      "title_link": "${BUILD_URL}",
       "color": "${color}",
       "fields": [${fields}]
     }
