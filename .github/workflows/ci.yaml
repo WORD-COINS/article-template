@@ -19,7 +19,9 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.MINIO_ACCESS_KEY }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.MINIO_SECRET_KEY }}
       AWS_EC2_METADATA_DISABLED: true
-      REPO_NAME: ${{ github.event.repository.name }}
+      PDF_BUILD_NOTIFY_URL: ${{ secrets.PDF_BUILD_NOTIFY_URL }}
+      REPO_NAME: ${{ github.repository }}
+      RUN_ID: ${{ github.run_id }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -51,3 +53,9 @@ jobs:
           WORD_FONT=sourcehan-jp make
           aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME-$ARTICLE_NAME.pdf
 
+      - uses: technote-space/workflow-conclusion-action@v2
+      - name: Notify Slack
+        if: always()
+        run: ./scripts/notify_slack.sh
+        env:
+          status: ${{ env.WORKFLOW_CONCLUSION }}
