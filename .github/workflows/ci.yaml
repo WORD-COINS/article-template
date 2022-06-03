@@ -53,7 +53,7 @@ jobs:
           WORD_FONT=sourcehan-jp make
           aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME-$ARTICLE_NAME.pdf
 
-      - uses: technote-space/workflow-conclusion-action@v2
+      - uses: technote-space/workflow-conclusion-action@v3
       - name: Notify Slack
         if: always()
         run: ./scripts/notify_slack.sh
