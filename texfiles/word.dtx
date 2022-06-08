@@ -35,8 +35,8 @@
 %</driver>
 %\fi
 %
-%\def\fileversion{0.1}
-%\def\filedate{2017/10/23}
+%\def\fileversion{0.2}
+%\def\filedate{2022/06/03}
 %\title{WORD Standard Class \fileversion}
 %\author{WORD \LaTeX{} Team}
 %\date{\filedate}
@@ -90,31 +90,18 @@
 
 %
 %\section{クラスのロード}
-% WORDでは環境変数によって変数を指定しています。環境変数\texttt{WORD\_FONT}によって、
-% 埋め込むフォントを決定します。この環境変数が指定されていない場合、フォントは\texttt{auto}となります。
+% WORDでは環境変数によって変数を指定しています。
+% 埋め込まれるフォントは\TeX Liveの提供する既定のフォント（\TeX Live 2020以降では原ノ味明朝・ゴシック）です．
 %    \begin{macrocode}
 \RequirePackage{ifluatex}
 \RequirePackage{ifxetex}
 \ifluatex
-  \newcommand{\WORDFONT}{%
-    \directlua{
-      WORD_FONT = os.getenv("WORD_FONT")
-
-      if WORD_FONT then
-        tex.print(WORD_FONT)
-      else
-        tex.print("auto")
-      end
-    }
-  }
-\fi
-\ifluatex
-\LoadClass[autodetect-engine, dvipdfmx-if-dvi, jbase=13Q, b5j, openany, fancyhdr=false, ja=standard, jafont=\WORDFONT]{bxjsbook}
+\LoadClass[autodetect-engine, dvipdfmx-if-dvi, jbase=13Q, b5j, openany, fancyhdr=false, ja=standard]{bxjsbook}
 \else
 \ifxetex
 \newcommand{\mathmc}{\mcfamily}
 \newcommand{\mathgt}{\gtfamily}
-\LoadClass[autodetect-engine, dvipdfmx-if-dvi, jbase=13Q, b5j, openany, fancyhdr=false, ja=standard, jafont=auto]{bxjsbook}
+\LoadClass[autodetect-engine, dvipdfmx-if-dvi, jbase=13Q, b5j, openany, fancyhdr=false, ja=standard]{bxjsbook}
 \else
 \LoadClass[autodetect-engine, dvipdfmx-if-dvi, jbase=13Q, b5j, openany, fancyhdr=false, ja=standard]{bxjsbook}
 \fi
