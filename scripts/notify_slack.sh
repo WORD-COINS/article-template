@@ -43,7 +43,7 @@ EOS
 `
 
 case "${status}" in
-  "success" | "skipped")
+  "success")
     color="good"
     # TODO: PDF_URL を PDF への直リンにしたい
     # fields="${fields},
@@ -52,6 +52,9 @@ case "${status}" in
     #   \"value\": \"${PDF_URL}\",
     #   \"short\": \"true\"
     # }"
+    ;;
+  "cancelled")
+    color="warning"
     ;;
   *) color="danger" ;;
 esac
