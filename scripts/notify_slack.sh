@@ -8,7 +8,7 @@ set -e
 GITHUB_HOST_URL="https://github.com"
 REPO_URL="${GITHUB_HOST_URL}/${REPO_NAME}"
 BUILD_URL="${GITHUB_HOST_URL}/${REPO_NAME}/actions/runs/${RUN_ID}"
-COMMIT_URL="${REPO_URL}/tree/${GITHUB_SHA}"
+COMMIT_URL="${REPO_URL}/commit/${GITHUB_SHA}"
 GIT_BRANCH="${GITHUB_REF##*/}"
 # TODO: PDF_URL を PDF への直リンにしたい
 # PDF_URL=""
