@@ -18,7 +18,10 @@ TEXDEPS      = $(addsuffix .cls, $(TEXFILES)/$(CLASS))
 TEXDTX       = $(addsuffix .dtx, $(TEXFILES)/$(CLASS))
 TEXINS       = $(addsuffix .ins, $(TEXFILES)/$(CLASS))
 
-.PHONY: all continue clean
+PANDOC       = pandoc
+PANDOC_TEMPLATE = word-template.latex
+
+.PHONY: all continue clean pandoc
 
 all: $(SRC).pdf
 
@@ -38,3 +41,6 @@ $(TEXDEPS): $(TEXDTX) $(TEXINS)
 clean:
 	$(RM) -f $(TEXDEPS)
 	$(LATEXMK) -C
+
+pandoc:
+	$(PANDOC) -f markdown -t latex -o $(SRC).tex --listings -M listings --template $(PANDOC_TEMPLATE) $(SRC).md
