@@ -45,6 +45,24 @@ jobs:
           fi
         id: branch_regex
 
+      - name: check exist main.md file
+        if: steps.branch_regex.outputs.match == 'true'
+        shell: bash
+        run: |
+          cd ${{ steps.extract_branch.outputs.branch }}
+          if [ -f ./main.md ]; then
+            if [ ! -f ./main.tex ]; then
+              echo "exist=true" >> $GITHUB_OUTPUT
+            fi
+          fi
+        id: main_md
+
+      - name: convert markdown to latex
+        if: steps.main_md.outputs.exist == 'true'
+        run: |
+          cd ${{ steps.extract_branch.outputs.branch }}
+          make pandoc
+
       - name: build articles branch
         if: steps.branch_regex.outputs.match == 'true'
         run: |
