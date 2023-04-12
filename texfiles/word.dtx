@@ -416,5 +416,22 @@
 
 %    \end{macrocode}
 
+% \section{Markdownサポート}
+% pandocを使ってMarkdownから{\LaTeX}ファイルを生成します。
+% この際、\texttt{\textbackslash tightlist}コマンドが箇条書き中に出現し、
+% \texttt{\textbackslash passthrough}コマンドがインラインコード中に出現します。
+% そのため、これに対応するためにコマンドを定義しています。
+% 想定していない記法で書かれたMarkdownファイルをpandocに与えると
+% 定義されていないコマンドが出現することになるかもしれません。
+% その際にはここに適切な定義を書き足すか、pandocオプションバトルをすることで
+% 出現しないように調節することができます。
+%    \begin{macrocode}
+
+\newcommand{\tightlist}{}
+\newcommand{\passthrough}[1]{#1}
+
+%    \end{macrocode}
+
+
 % \Finale
 \endinput

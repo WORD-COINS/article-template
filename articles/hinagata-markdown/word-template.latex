@@ -7,9 +7,6 @@
 % ここに\usepackageなどを書いても無意味です。
 % リポジトリ直下のmain.texに書きましょう。
 
-\def\tightlist{}
-\def\passthrough#1{#1}
-
 \begin{document}
 
 \lstset{
