@@ -1,0 +1,55 @@
+\makeatletter
+\def\input@path{{../../}}
+\makeatother
+ 
+\documentclass[../../main]{subfiles}
+
+% ここに\usepackageなどを書いても無意味です。
+% リポジトリ直下のmain.texに書きましょう。
+
+\def\tightlist{}
+\def\passthrough#1{#1}
+
+\begin{document}
+
+\lstset{
+  basicstyle=\ttfamily,
+  commentstyle=\textit,
+  frame=trBL,
+  numbers=left,
+  breaklines=true,
+  title=\lstname,
+}
+
+\definecolor{diffstart}{named}{Grey}
+\definecolor{diffincl}{named}{Green}
+\definecolor{diffrem}{named}{OrangeRed}
+
+\lstdefinelanguage{diff}{
+  morecomment=[f][\color{diffstart}]{@@},
+  morecomment=[f][\color{diffincl}]{+\ },
+  morecomment=[f][\color{diffrem}]{-\ },
+}
+
+% Listingsの番号再定義です。
+% この命令はdocumentがはじまってからでないとダメなのでここにあります。
+\renewcommand{\thelstlisting}{\arabic{lstlisting}}
+
+% 著者名の前にある「文 編集部」を削除する場合は次のコマンドをアンコメントします。
+% \authormark{}
+
+% 執筆者名
+\articleauthor{$author$}
+
+% 記事タイトルを書いてください
+\articletitle{$title$}
+
+\makearticletitle
+
+$body$
+
+% 参考文献の出力
+% 文書中で参考文献を用いたときアンコメント
+%\bibbysection[heading=subbibnumbered]
+
+\end{document}
