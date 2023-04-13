@@ -71,6 +71,17 @@ jobs:
           WORD_FONT=sourcehan-jp make
           aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME-$ARTICLE_NAME.pdf
 
+      - name: build article template
+        if: ${{ github.repository == 'WORD-COINS/article-template' }}
+        run: WORD_FONT=sourcehan-jp make
+      
+      - name: upload article template artifact
+        if: ${{ github.repository == 'WORD-COINS/article-template' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: article-template
+          path: main.pdf
+
       - name: Notify Slack
         if: always()
         run: ./scripts/notify_slack.sh
