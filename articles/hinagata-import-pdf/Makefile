@@ -1,9 +1,6 @@
 MAKE         = make
 LATEXMK      = latexmk
-
-LATEXMKFLAG += -halt-on-error
-# LuaLaTeXを利用するときは上の行をコメントアウトし、下記の行をアンコメントする
-# LATEXMKFLAG += -halt-on-error -lualatex
+LATEXMKFLAG += -halt-on-error -lualatex
 
 CP           = cp
 RM           = rm
@@ -15,12 +12,15 @@ TARGET       = $(addsuffix .pdf, $(SRC))
 TEXFILES     = ../../texfiles
 
 CLASS        = word
-TEXDEPS      = $(foreach deps, $(CLASS).cls, $(TEXFILES)/$(deps))
 
+TEXDEPS      = $(foreach deps, $(CLASS).cls, $(TEXFILES)/$(deps))
 TEXDTX       = $(addsuffix .dtx, $(TEXFILES)/$(CLASS))
 TEXINS       = $(addsuffix .ins, $(TEXFILES)/$(CLASS))
 
-.PHONY: all continue clean
+PANDOC       = pandoc
+PANDOC_TEMPLATE = word-template.latex
+
+.PHONY: all continue clean pandoc
 
 all: $(SRC).pdf
 
@@ -41,3 +41,6 @@ clean:
 	$(MAKE) clean -C $(TEXFILES)
 	$(RM) -f $(TEXDEPS)
 	$(LATEXMK) -C
+
+pandoc:
+	$(PANDOC) -f markdown -t latex -o $(SRC).tex --listings -M listings --template $(PANDOC_TEMPLATE) $(SRC).md
