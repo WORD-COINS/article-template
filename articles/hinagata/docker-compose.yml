@@ -1,0 +1,9 @@
+version: '3.4'
+services:
+  article_build:
+    image: ghcr.io/word-coins/latex-build:latest
+    command: "bash -c 'fc-cache && WORD_FONT=sourcehan-jp make'"
+    working_dir: /workdir/articles/current_article
+    volumes:
+      - ../..:/workdir
+      - .:/workdir/articles/current_article

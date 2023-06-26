@@ -177,9 +177,12 @@ wordクラスを使う場合、`documentclass`のオプションに`noheader`と
 
 ### Dockerによるコンパイル
 手元でのビルドに失敗したり、TeXLiveを入れたくなかったりする人はDockerイメージを使ってビルドすることもできます。
-```
-$ docker-compose up
-```
+
+#### 全体のコンパイル
+リポジトリのルートディレクトリで`docker compose up`しましょう。
+
+#### 各記事のコンパイル
+目次と裏表紙が必要ない場合は`articles/`以下の記事ディレクトリに`cd`して`docker compose up`しましょう。
 
 ### GitHub Actionsによるコンパイル
 特定のブランチ名でBitBucketにpushするとGitHub Actionsを使って記事をビルドすることができます。
