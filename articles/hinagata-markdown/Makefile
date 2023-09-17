@@ -43,4 +43,4 @@ clean:
 	$(LATEXMK) -C
 
 pandoc:
-	$(PANDOC) -f markdown -t latex -o $(SRC).tex --listings -M listings --template $(PANDOC_TEMPLATE) $(SRC).md
+	$(PANDOC) -f markdown+raw_tex+tex_math_dollars -t latex -o $(SRC).tex --listings -M listings --template $(PANDOC_TEMPLATE) $(SRC).md
