@@ -76,9 +76,43 @@ print("hello")
 
 ## 画像
 
-![画像のテスト](../back_cover/wordlogo.pdf)
+![画像のテスト](../back_cover/wordlogo.pdf){#fig:pdf_figure}
+
+![画像のテスト（jpeg）](./wordlogo.jpg){#fig:jpeg_figure}
 
 
+このようにPDFやJPEG、PNG画像を付けることができます。
+
+画像の横幅や縦幅を指定したい場合はLaTeXコードを書く必要があります：
+
+
+\begin{figure}
+\hypertarget{fig:jpeg_figure}{%
+\centering
+\includegraphics[width=0.8\textwidth]{./wordlogo.jpg}
+\caption{画像のテスト（大きさ変更）}\label{fig:jpeg_figure}
+}
+\end{figure}
+
+## 数式
+
+簡単な数式は$マークの間に書くことで実現できます。
+
+$$x + y = \frac{y}{x}$$
+
+
+行の中に入れることもできます。：$a + b = c$
+
+
+## \LaTeX コマンド
+
+コマンドを文中に書くことができます。
+
+例えば強制的に改ページしたいときは
+
+\newpage
+
+とすれば実現できます
 
 # texファイルの生成
 
@@ -89,6 +123,8 @@ make pandoc
 ```
 
 とすることで生成することができます。
+
+main.texファイルがあるとmarkdown変換処理が行われないため、main.texファイルをコミットしないように気を付けてください
 
 # その他情報
 
