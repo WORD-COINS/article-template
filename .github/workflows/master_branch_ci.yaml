@@ -28,7 +28,7 @@ jobs:
       - name: convert markdown to latex
         run: |
           for filepath in $PWD/articles/*; do
-            cd filepath
+            cd $filepath
             if [ -f ./main.md ]; then
               if [ ! -f ./main.tex ]; then
                 echo $filepath
