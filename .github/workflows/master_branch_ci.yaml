@@ -1,4 +1,4 @@
-name: CI
+name: Master Branch CI
 
 on:
   push:
@@ -41,7 +41,7 @@ jobs:
         run: |
           WORD_FONT=sourcehan-jp make
 
-      - name: upload master branch pdf file
+      - name: upload artifact
         continue-on-error: true # アップロードに失敗しても良い
         run: |
           aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME.pdf

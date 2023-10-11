@@ -1,4 +1,4 @@
-name: CI
+name: Articles Branch CI
 
 on:
   push:
@@ -62,7 +62,7 @@ jobs:
           cd ${{ steps.extract_branch.outputs.branch }}
           WORD_FONT=sourcehan-jp make
       
-      - name: upload articles branch pdf file
+      - name: upload artifact
         continue-on-error: true # 失敗しても良い
         if: steps.branch_regex.outputs.match == 'true'
         run: |

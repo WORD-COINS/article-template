@@ -1,4 +1,4 @@
-name: CI
+name: Article Template CI
 
 on: [push, pull_request]
 
