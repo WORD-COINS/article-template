@@ -3,11 +3,9 @@ name: CI
 on:
   push:
     branches:
-      - master
       - "articles/**"
   pull_request:
     branches:
-      - master
       - "articles/**"
 
 jobs:
@@ -30,12 +28,6 @@ jobs:
         shell: bash
         run: echo "branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
         id: extract_branch
-
-      - name: build master branch
-        if: steps.extract_branch.outputs.branch == 'master'
-        run: |
-          WORD_FONT=sourcehan-jp make
-          aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME.pdf
 
       - name: check branch name
         shell: bash
@@ -69,18 +61,12 @@ jobs:
           ARTICLE_NAME=$(echo '${{ steps.extract_branch.outputs.branch }}' | awk -F '/' '{print $2}')
           cd ${{ steps.extract_branch.outputs.branch }}
           WORD_FONT=sourcehan-jp make
-          aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME-$ARTICLE_NAME.pdf
-
-      - name: build article template
-        if: ${{ github.repository == 'WORD-COINS/article-template' }}
-        run: WORD_FONT=sourcehan-jp make
       
-      - name: upload article template artifact
-        if: ${{ github.repository == 'WORD-COINS/article-template' }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: article-template
-          path: main.pdf
+      - name: upload articles branch pdf file
+        continue-on-error: true # 失敗しても良い
+        if: steps.branch_regex.outputs.match == 'true'
+        run: |
+          aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME-$ARTICLE_NAME.pdf
 
       - name: Notify Slack
         if: always()
