@@ -42,6 +42,7 @@ jobs:
           WORD_FONT=sourcehan-jp make
 
       - name: upload artifact to github
+        if: ${{ github.event_name == 'push' }}
         uses: actions/upload-artifact@v3
         with:
           name: main.pdf
