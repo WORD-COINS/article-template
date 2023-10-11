@@ -1,0 +1,60 @@
+name: Master Branch CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-article:
+    runs-on: ubuntu-20.04
+    container:
+      image: ghcr.io/word-coins/latex-build:latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.MINIO_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.MINIO_SECRET_KEY }}
+      AWS_EC2_METADATA_DISABLED: true
+      PDF_BUILD_NOTIFY_URL: ${{ secrets.PDF_BUILD_NOTIFY_URL }}
+      REPO_NAME: ${{ github.repository }}
+      RUN_ID: ${{ github.run_id }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      # 事前にarticlesフォルダ内のmarkdownファイルに対してpandocを実行する
+      - name: convert markdown to latex
+        run: |
+          for filepath in $PWD/articles/*; do
+            cd $filepath
+            if [ -f ./main.md ]; then
+              if [ ! -f ./main.tex ]; then
+                echo $filepath
+                make pandoc
+              fi
+            fi
+          done
+
+      - name: build master branch
+        run: |
+          WORD_FONT=sourcehan-jp make
+
+      - name: upload artifact to github
+        uses: actions/upload-artifact@v3
+        with:
+          name: main.pdf
+          path: main.pdf
+          retention-days: 3 # 3日くらいあったらみんなダウンロードして確認しているはず
+
+      - name: upload artifact to k8s
+        continue-on-error: true # アップロードに失敗しても良い
+        run: |
+          aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME.pdf
+
+      - name: Notify Slack
+        if: always()
+        run: ./scripts/notify_slack.sh
+        env:
+          status: ${{ job.status }}

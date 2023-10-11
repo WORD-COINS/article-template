@@ -1,13 +1,11 @@
-name: CI
+name: Articles Branch CI
 
 on:
   push:
     branches:
-      - master
       - "articles/**"
   pull_request:
     branches:
-      - master
       - "articles/**"
 
 jobs:
@@ -30,12 +28,6 @@ jobs:
         shell: bash
         run: echo "branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
         id: extract_branch
-
-      - name: build master branch
-        if: steps.extract_branch.outputs.branch == 'master'
-        run: |
-          WORD_FONT=sourcehan-jp make
-          aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME.pdf
 
       - name: check branch name
         shell: bash
@@ -67,8 +59,22 @@ jobs:
         if: steps.branch_regex.outputs.match == 'true'
         run: |
           ARTICLE_NAME=$(echo '${{ steps.extract_branch.outputs.branch }}' | awk -F '/' '{print $2}')
+          echo "article_name=$ARTICLE_NAME" >> $GITHUB_OUTPUT
           cd ${{ steps.extract_branch.outputs.branch }}
           WORD_FONT=sourcehan-jp make
+        id: build
+
+      - name: upload artifact to github
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.build.outputs.article_name }}.pdf
+          path: ${{ steps.extract_branch.outputs.branch }}/main.pdf
+          retention-days: 3 # 3日くらいあったらみんなダウンロードして確認しているはず
+
+      - name: upload artifact to k8s
+        continue-on-error: true # 失敗しても良い
+        if: steps.branch_regex.outputs.match == 'true'
+        run: |
           aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME-$ARTICLE_NAME.pdf
 
       - name: Notify Slack
