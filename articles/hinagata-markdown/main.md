@@ -10,10 +10,12 @@ LaTeXを手元に用意せずに簡単に記事を書くために用意してい
 リポジトリをgitで手元にcloneしたのちにフォルダ名と同じブランチを作成して移動します。
 
 ```
-$ git checkout -b articles/test
+$ git checkout -b articles/my-article-md
 ```
 
-`main.md`ファイル内に記事を書きます。その際、ファイル冒頭にタイトルと著者名を以下のように必ず記述してください。
+とした場合には`articles/hinagata-markdown`フォルダをコピーしたのちにフォルダ名を変更し、`articles/my-article-md`フォルダとします。ブランチ名が異なる場合はフォルダ名も当然異なります。このとき、ブランチ名は必ず`articles/*`という形式にしてください。
+
+`articles/my-article-md`フォルダ内の`main.md`ファイル内に記事を書きます。その際、ファイル冒頭にタイトルと著者名を以下のように必ず記述してください。
 
 
 ```
@@ -23,10 +25,32 @@ author: 著者名
 ---
 ```
 
+さて、今度はリポジトリルートにmain.texファイルを開きます。すると
+
+```TeX
+\mainmatter
+
+% 記事（サンプル）
+\article{./articles/hinagata}
+% 記事（markdownサンプル）
+\article{./articles/hinagata-markdown}
+
+% 裏表紙
+\article{./articles/back_cover}
+```
+このようになっていると思いますので、この「記事（サンプル）」と「裏表紙」という
+コメントの間に次のような書き込みをしましょう。
+
+```TeX
+\article{./articles/my-article-md}
+```
+
+このとき、`\article`コマンドの引数には記事のあるフォルダまでのパスを与えてください。
+
 記事の執筆が終わったらcommitをしてpushしましょう。
 
 ```
-$ git add articles/test
+$ git add articles/my-article-md
 $ git commit -m "add article"
 $ git push
 ```
