@@ -27,7 +27,7 @@ jobs:
       # 事前にarticlesフォルダ内のmarkdownファイルに対してpandocを実行する
       - name: convert markdown to latex
         run: |
-          for filepath in $PWD/articles/*; do echo $filepath; done
+          for filepath in $PWD/articles/*; do
             cd filepath
             if [ -f ./main.md ]; then
               if [ ! -f ./main.tex ]; then
