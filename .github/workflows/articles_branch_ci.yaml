@@ -66,7 +66,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.extract_branch.outputs.branch }}/main.pdf
-          path: ${{ steps.extract_branch.outputs.branch }/main.pdf
+          path: ${{ steps.extract_branch.outputs.branch }}/main.pdf
           retention-days: 3 # 3日くらいあったらみんなダウンロードして確認しているはず
 
       - name: upload artifact to k8s
