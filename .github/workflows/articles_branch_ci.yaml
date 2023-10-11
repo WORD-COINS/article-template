@@ -65,7 +65,7 @@ jobs:
       - name: upload artifact to github
         uses: actions/upload-artifact@v3
         with:
-          name: ${GITHUB_REF_NAME}.pdf
+          name: ${{ GITHUB_REF_NAME }}.pdf
           path: ${{ steps.extract_branch.outputs.branch }}/main.pdf
           retention-days: 3 # 3日くらいあったらみんなダウンロードして確認しているはず
 
