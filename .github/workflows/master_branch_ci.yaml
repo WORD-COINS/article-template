@@ -41,7 +41,14 @@ jobs:
         run: |
           WORD_FONT=sourcehan-jp make
 
-      - name: upload artifact
+      - name: upload artifact to github
+        uses: actions/upload-artifact@v3
+        with:
+          name: main.pdf
+          path: main.pdf
+          retention-days: 3 # 3日くらいあったらみんなダウンロードして確認しているはず
+
+      - name: upload artifact to k8s
         continue-on-error: true # アップロードに失敗しても良い
         run: |
           aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME.pdf
