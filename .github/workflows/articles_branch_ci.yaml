@@ -59,13 +59,15 @@ jobs:
         if: steps.branch_regex.outputs.match == 'true'
         run: |
           ARTICLE_NAME=$(echo '${{ steps.extract_branch.outputs.branch }}' | awk -F '/' '{print $2}')
+          echo "article_name=$ARTICLE_NAME" >> $GITHUB_OUTPUT
           cd ${{ steps.extract_branch.outputs.branch }}
           WORD_FONT=sourcehan-jp make
+        id: build
 
       - name: upload artifact to github
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ ARTICLE_NAME }}.pdf
+          name: ${{ steps.build.outputs.article_name }}.pdf
           path: ${{ steps.extract_branch.outputs.branch }}/main.pdf
           retention-days: 3 # 3日くらいあったらみんなダウンロードして確認しているはず
 
