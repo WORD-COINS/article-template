@@ -65,7 +65,7 @@ jobs:
         id: build
 
       - name: upload artifact to github
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.build.outputs.article_name }}.pdf
           path: ${{ steps.extract_branch.outputs.branch }}/main.pdf
