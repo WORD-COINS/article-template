@@ -55,6 +55,7 @@ jobs:
           aws s3 --endpoint-url=https://minio.k8s.word-ac.net cp ./main.pdf s3://article-bucket/$REPO_NAME.pdf
 
       - name: Notify Slack
+        continue-on-error: true # 失敗しても良い
         if: always()
         run: ./scripts/notify_slack.sh
         env:
