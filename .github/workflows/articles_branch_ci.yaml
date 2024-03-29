@@ -43,9 +43,7 @@ jobs:
         run: |
           cd ${{ steps.extract_branch.outputs.branch }}
           if [ -f ./main.md ]; then
-            if [ ! -f ./main.tex ]; then
-              echo "exist=true" >> $GITHUB_OUTPUT
-            fi
+            echo "exist=true" >> $GITHUB_OUTPUT
           fi
         id: main_md
 
