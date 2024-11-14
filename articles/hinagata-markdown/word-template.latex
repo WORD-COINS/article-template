@@ -7,6 +7,8 @@
 % ここに\usepackageなどを書いても無意味です。
 % リポジトリ直下のmain.texに書きましょう。
 
+\begin{document}
+
 % Pandoc3.2.1以降の画像埋め込み対応
 \makeatletter
 \newsavebox\pandoc@box
@@ -19,8 +21,6 @@
   \else\usebox{\pandoc@box}%
   \fi%
 }
-
-\begin{document}
 
 \lstset{
   basicstyle=\ttfamily,
