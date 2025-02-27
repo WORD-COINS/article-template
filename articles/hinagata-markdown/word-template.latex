@@ -11,7 +11,9 @@
 
 % Pandoc3.2.1以降の画像埋め込み対応
 \makeatletter
-\newsavebox\pandoc@box
+\@ifundefined{pandoc@box}{
+  \newsavebox\pandoc@box
+}{}
 \newcommand*\pandocbounded[1]{% scales image to fit in text height/width
   \sbox\pandoc@box{#1}%
   \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
