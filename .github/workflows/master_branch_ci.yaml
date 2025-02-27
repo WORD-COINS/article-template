@@ -1,9 +1,9 @@
-name: Master Branch CI
+name: Main Branch CI
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build-article:
@@ -25,7 +25,7 @@ jobs:
       - name: convert markdown to latex
         run: ./scripts/all_pandoc.sh
 
-      - name: build master branch
+      - name: build main branch
         run: |
           WORD_FONT=sourcehan-jp make
 
