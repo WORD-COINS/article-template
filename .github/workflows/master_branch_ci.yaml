@@ -19,7 +19,7 @@ jobs:
       RUN_ID: ${{ github.run_id }}
     steps:
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # 事前にarticlesフォルダ内のmarkdownファイルに対してpandocを実行する
       - name: convert markdown to latex
